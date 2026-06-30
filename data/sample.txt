@@ -1,0 +1,13 @@
+Artificial Intelligence (AI) is transforming industries around the world.
+
+Machine Learning is a branch of AI that enables computers to learn patterns from data.
+
+Deep Learning uses neural networks with many layers to solve complex problems.
+
+Large Language Models (LLMs) are trained on vast amounts of text and can answer questions, summarize information, generate code, and assist with reasoning.
+
+Retrieval-Augmented Generation (RAG) improves LLM responses by retrieving relevant information from external documents before generating an answer.
+
+Instead of relying only on the model's internal knowledge, RAG searches through documents, retrieves useful chunks, and provides them as context.
+
+This approach reduces hallucinations and improves answer accuracy.
