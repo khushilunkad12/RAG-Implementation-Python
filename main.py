@@ -1,19 +1,19 @@
 from loader import load_document
 from chunker import chunk_text
 
-# Step 1: Load the document
-text = load_document("data/sample.txt")
+file_path = "data/sample.txt"
 
-# Step 2: Split into chunks
-chunks = chunk_text(text)
+text = load_document(file_path)
 
-# Step 3: Print total chunks
+chunks = chunk_text(text, file_path)
+
 print(f"\nTotal Chunks: {len(chunks)}\n")
 
-# Step 4: Print each chunk
-for index, chunk in enumerate(chunks, start=1):
+for chunk in chunks:
     print("=" * 60)
-    print(f"Chunk {index}")
+    print(f"Chunk ID : {chunk['chunk_id']}")
+    print(f"Source   : {chunk['source']}")
+    print("Text:")
+    print(chunk["text"])
     print("=" * 60)
-    print(chunk)
     print()
