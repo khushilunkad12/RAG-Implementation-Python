@@ -60,3 +60,45 @@ The retriever:
 - Searches ChromaDB
 - Retrieves the top 3 most relevant chunks
 - Displays chunk text, metadata, and similarity distance
+
+### Clone the repository
+
+```bash
+git clone <repository-url>
+cd Phase2_Rag_Practice
+```
+
+### Create a virtual environment
+
+```bash
+python -m venv venv
+```
+
+### Activate
+
+Windows
+
+```bash
+venv\Scripts\activate
+```
+
+### Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Create a `.env` file
+
+```env
+GEMINI_API_KEY=YOUR_API_KEY
+```
+
+### Run the project
+
+```bash
+python main.py
+python embed_store.py
+python retriever.py
+python rag_answer.py
+```
