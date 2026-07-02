@@ -64,11 +64,11 @@ Phase2_Rag_Practice/
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/khushilunkad12/Phase2_Rag_Practice.git
+git clone https://github.com/khushilunkad12/RAG-Implementation-Python.git
 ```
 
 ```bash
-cd Phase2_Rag_Practice
+cd RAG-Implementation-Python
 ```
 
 ---

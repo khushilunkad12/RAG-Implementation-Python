@@ -4,11 +4,21 @@ from sentence_transformers import SentenceTransformer
 # Load embedding model
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
-# Load ChromaDB
 client = chromadb.PersistentClient(path="chroma_db")
 
-# Load collection
-collection = client.get_collection(name="rag_documents")
+try:
+    collection = client.get_collection(
+        name="rag_documents"
+    )
+except Exception:
+    print("Error: Chroma collection not found.")
+    print()
+    print("Run the following first:")
+    print("python main.py")
+    print("python embed_store.py")
+    exit()
+
+print("Connected to ChromaDB.")
 
 # User query
 query = input("Enter your question: ")

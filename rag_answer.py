@@ -4,12 +4,11 @@ import os
 from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 
-
-#load key
+# ==========================================
+# 1. Load Environment Variables
+# ==========================================
 load_dotenv()
-# ==========================================
-# 1. Gemini API Key
-# ==========================================
+
 API_KEY = os.getenv("GEMINI_API_KEY")
 
 if not API_KEY:
@@ -17,10 +16,13 @@ if not API_KEY:
         "GEMINI_API_KEY not found. Please add it to the .env file."
     )
 
-client = genai.Client(api_key=API_KEY)
+# ==========================================
+# 2. Create Gemini Client
+# ==========================================
+gemini_client = genai.Client(api_key=API_KEY)
 
 # ==========================================
-# 2. Load Embedding Model
+# 3. Load Embedding Model
 # ==========================================
 print("Loading embedding model...")
 
@@ -29,38 +31,36 @@ model = SentenceTransformer("all-MiniLM-L6-v2")
 print("Embedding model loaded.")
 
 # ==========================================
-# 3. Connect to ChromaDB
+# 4. Connect to ChromaDB
 # ==========================================
-client_db = chromadb.PersistentClient(path="chroma_db")
+db_client = chromadb.PersistentClient(path="chroma_db")
 
 try:
-    collection = client.get_collection(
+    collection = db_client.get_collection(
         name="rag_documents"
     )
 except Exception:
     print("Error: Chroma collection not found.")
     print()
-    print("Run the following first:")
+    print("Run the following commands first:")
     print("python main.py")
     print("python embed_store.py")
     exit()
 
 print("Connected to ChromaDB.")
 
-print("Connected to ChromaDB.")
-
 # ==========================================
-# 4. Get User Query
+# 5. Get User Query
 # ==========================================
 query = input("\nEnter your question: ")
 
 # ==========================================
-# 5. Convert Query into Embedding
+# 6. Generate Query Embedding
 # ==========================================
 query_embedding = model.encode(query).tolist()
 
 # ==========================================
-# 6. Retrieve Top 3 Chunks
+# 7. Retrieve Top 3 Relevant Chunks
 # ==========================================
 results = collection.query(
     query_embeddings=[query_embedding],
@@ -75,7 +75,7 @@ print("\nRetrieved Chunks:\n")
 
 for i in range(len(documents)):
     print("=" * 60)
-    print(f"Rank : {i+1}")
+    print(f"Rank : {i + 1}")
     print(f"Distance : {distances[i]:.4f}")
     print(f"Source : {metadatas[i]['source']}")
     print(f"Chunk : {metadatas[i]['chunk_index']}")
@@ -84,12 +84,12 @@ for i in range(len(documents)):
     print("=" * 60)
 
 # ==========================================
-# 7. Build Context
+# 8. Build Context
 # ==========================================
 context = "\n\n".join(documents)
 
 # ==========================================
-# 8. Prompt Engineering
+# 9. Prompt Engineering
 # ==========================================
 prompt = f"""
 You are a helpful AI assistant.
@@ -108,15 +108,15 @@ Question:
 """
 
 # ==========================================
-# 9. Generate Answer using Gemini
+# 10. Generate Answer using Gemini
 # ==========================================
-response = client.models.generate_content(
+response = gemini_client.models.generate_content(
     model="gemini-2.5-flash",
     contents=prompt
 )
 
 # ==========================================
-# 10. Print Final Answer
+# 11. Print Final Answer
 # ==========================================
 print("\n")
 print("=" * 70)
