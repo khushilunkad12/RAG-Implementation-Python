@@ -33,9 +33,19 @@ print("Embedding model loaded.")
 # ==========================================
 client_db = chromadb.PersistentClient(path="chroma_db")
 
-collection = client_db.get_collection(
-    name="rag_documents"
-)
+try:
+    collection = client.get_collection(
+        name="rag_documents"
+    )
+except Exception:
+    print("Error: Chroma collection not found.")
+    print()
+    print("Run the following first:")
+    print("python main.py")
+    print("python embed_store.py")
+    exit()
+
+print("Connected to ChromaDB.")
 
 print("Connected to ChromaDB.")
 

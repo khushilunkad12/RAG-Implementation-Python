@@ -1,33 +1,52 @@
 import json
+import os
 import chromadb
 from sentence_transformers import SentenceTransformer
 
-# Load chunks from JSON
+# ----------------------------
+# Check if chunk file exists
+# ----------------------------
+if not os.path.exists("output_chunks.json"):
+    print("Error: output_chunks.json not found.")
+    print("Run:")
+    print("python main.py")
+    exit()
+
+# ----------------------------
+# Load chunks
+# ----------------------------
 with open("output_chunks.json", "r", encoding="utf-8") as file:
     chunks = json.load(file)
 
 print(f"Loaded {len(chunks)} chunks.")
 
+# ----------------------------
 # Load embedding model
+# ----------------------------
+print("Loading embedding model...")
+
 model = SentenceTransformer("all-MiniLM-L6-v2")
+
 print("Embedding model loaded.")
 
-# Create ChromaDB client
+# ----------------------------
+# Connect to ChromaDB
+# ----------------------------
 client = chromadb.PersistentClient(path="chroma_db")
 
-# Create or get collection
 collection = client.get_or_create_collection(
     name="rag_documents"
 )
 
+print("Connected to ChromaDB.")
 
-# Process each chunk
+# ----------------------------
+# Store embeddings
+# ----------------------------
 for chunk in chunks:
 
-    # Generate embedding
     embedding = model.encode(chunk["text"]).tolist()
 
-    # Store in ChromaDB
     collection.upsert(
         ids=[chunk["chunk_id"]],
         documents=[chunk["text"]],
@@ -35,4 +54,4 @@ for chunk in chunks:
         metadatas=[chunk["metadata"]]
     )
 
-print("Embeddings stored successfully in ChromaDB.")
+print("Embeddings stored successfully.")
