@@ -1,0 +1,3 @@
+Retrieval-Augmented Generation retrieves relevant information from external documents before generating an answer.
+
+It improves accuracy and reduces hallucinations.
