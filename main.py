@@ -1,37 +1,67 @@
 import json
 
-from loader import load_document
+from document_loader import load_documents
 from chunker import chunk_text
 
-# Step 1: Specify the file path
-file_path = "data/sample.txt"
+# ==========================================
+# Load all documents
+# ==========================================
 
-# Step 2: Load the document
-text = load_document(file_path)
+documents = load_documents()
 
-# Step 3: Split the document into chunks with metadata
-chunks = chunk_text(text, file_path)
+print(f"Loaded {len(documents)} documents.\n")
 
-# Step 4: Save chunks to JSON
-with open("output_chunks.json", "w", encoding="utf-8") as file:
-    json.dump(chunks, file, indent=4)
+all_chunks = []
 
-print(" Chunks saved to output_chunks.json")
+# ==========================================
+# Chunk every document
+# ==========================================
 
-# Step 5: Print total chunks
-print(f"\nTotal Chunks: {len(chunks)}\n")
+for document in documents:
 
-# Step 6: Print each chunk
-for chunk in chunks:
+    print(f"Processing: {document['filename']}")
+
+    chunks = chunk_text(
+        document["text"],
+        document["filename"]
+    )
+
+    all_chunks.extend(chunks)
+
+# ==========================================
+# Save chunks
+# ==========================================
+
+with open(
+    "output_chunks.json",
+    "w",
+    encoding="utf-8"
+) as file:
+
+    json.dump(
+        all_chunks,
+        file,
+        indent=4
+    )
+
+print("\nChunks saved to output_chunks.json")
+
+print(f"\nTotal Documents : {len(documents)}")
+print(f"Total Chunks    : {len(all_chunks)}\n")
+
+# ==========================================
+# Display chunks
+# ==========================================
+
+for chunk in all_chunks:
+
     print("=" * 60)
     print(f"Chunk ID    : {chunk['chunk_id']}")
     print(f"Source      : {chunk['metadata']['source']}")
     print(f"Chunk Index : {chunk['metadata']['chunk_index']}")
     print(f"Chunk Size  : {chunk['metadata']['chunk_size']} characters")
-
     print(f"Overlap     : {chunk['metadata']['overlap']} characters")
-
-    print("Text:")
+    print("\nText:\n")
     print(chunk["text"])
     print("=" * 60)
     print()
