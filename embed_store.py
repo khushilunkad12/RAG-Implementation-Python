@@ -47,7 +47,7 @@ def store_embeddings():
 
     print("Embedding model loaded.")
 
-    # ----------------------------
+       # ----------------------------
     # Connect to ChromaDB
     # ----------------------------
 
@@ -55,6 +55,14 @@ def store_embeddings():
         path="chroma_db"
     )
 
+    # Remove old collection if it exists
+    try:
+        client.delete_collection("rag_documents")
+        print("Old collection removed.")
+    except Exception:
+        pass
+
+    # Create a fresh collection
     collection = client.get_or_create_collection(
         name="rag_documents"
     )
@@ -79,8 +87,6 @@ def store_embeddings():
         )
 
     print("Embeddings stored successfully.")
-
-
 # ==========================================
 # Main Function
 # ==========================================

@@ -36,6 +36,92 @@ The project is designed as a modular Retrieval-Augmented Generation application 
 
 ---
 
+## Testing
+
+The project was tested on Windows using Python 3.12.
+
+### Commands Executed
+
+```bash
+python main.py
+python embed_store.py
+python retriever.py
+python rag_answer.py
+streamlit run app.py
+```
+
+---
+
+### Test Cases
+
+#### Test 1 – Upload Document
+**Input:** Python Notes PDF
+
+**Expected Result:**
+- Document uploads successfully.
+- Previous document is removed.
+- Current document is displayed.
+
+**Status:** ✅ Pass
+
+---
+
+#### Test 2 – Document Processing
+
+**Expected Result:**
+- Pages extracted successfully.
+- Text chunked correctly.
+- Embeddings generated.
+- ChromaDB updated.
+
+**Status:** ✅ Pass
+
+---
+
+#### Test 3 – Retrieval Pipeline
+
+**Expected Result:**
+- Relevant chunks retrieved.
+- Source filename displayed.
+- Page number displayed.
+- Chunk number displayed.
+
+**Status:** ✅ Pass
+
+---
+
+#### Test 4 – Question Answering
+
+**Expected Result:**
+Gemini generates an answer from retrieved context.
+
+**Status:** ⏳ Pending Retest
+
+Reason:
+Gemini API quota was exceeded during testing. Retrieval pipeline was verified successfully.
+
+---
+
+#### Test 5 – Reset Session
+
+**Expected Result:**
+- Documents removed.
+- Chroma collection cleared.
+- Current document reset.
+- User can upload a new document.
+
+**Status:** ✅ Pass
+
+---
+
+### Notes
+
+When Gemini API is unavailable, the application:
+
+- Shows an informative error message.
+- Displays retrieved sources.
+- Displays retrieved chunks.
+- Allows verification of the retrieval pipeline without LLM response.
 # Tech Stack
 
 * Python 3.12
