@@ -150,7 +150,7 @@ Status: ✅ PASS
 | Retrieval | ✅ PASS |
 | Source Display | ✅ PASS |
 | Reset Session | ✅ PASS |
-| Gemini Response | pass |
+
 
 ---
 
