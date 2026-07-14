@@ -15,17 +15,17 @@
 ### Test Case 1
 
 **Question:**
- where funds engage across a wide range of themes?
+ Where do funds engage across a wide range of themes?
 
 **Answer Returned:**
 The funds engage across a wide range of themes, including the defence of the territories, adaptation, sustainable livelihoods, biodiversity, forests and agroecology, food.
 
 **Source Files:**
-1.Financing social and environmental justice in the global South.pdf (Page 2, Chunk 7)
-2.Financing social and environmental justice in the global South.pdf (Page 1, Chunk 3)
-3.Financing social and environmental justice in the global South.pdf (Page 2, Chunk 12)
-3.Financing social and environmental justice in the global South.pdf (Page 4, Chunk 24)
-4.Financing social and environmental justice in the global South.pdf (Page 2, Chunk 2)
+1. Financing social and environmental justice in the global South.pdf (Page 2, Chunk 7)
+2. Financing social and environmental justice in the global South.pdf (Page 1, Chunk 3)
+3. Financing social and environmental justice in the global South.pdf (Page 2, Chunk 12)
+4. Financing social and environmental justice in the global South.pdf (Page 4, Chunk 24)
+5. Financing social and environmental justice in the global South.pdf (Page 2, Chunk 2)
 
 **Page/Chunk References:**
 Retrieved Chunk 1 (Distance: 0.7839)
@@ -144,7 +144,7 @@ Retrieved Chunk 5 (Distance: 1.1451)
 PASS ✅
 
 **Proof:**
-Screenshot:https://drive.google.com/drive/folders/1yqM91Ci3in9wo9r-hSrnWo51j7mHI1Pu?usp=sharing
+Screenshot: https://drive.google.com/drive/folders/1yqM91Ci3in9wo9r-hSrnWo51j7mHI1Pu?usp=sharing
 
 
 
@@ -200,15 +200,14 @@ Screenshot: https://drive.google.com/drive/folders/1yqM91Ci3in9wo9r-hSrnWo51j7mH
 
 | Test ID | Test                                                | Result                                                                         | Status                |
 | ------- | --------------------------------------------------- | ------------------------------------------------------------------------------ | --------------------- |
-| G-01    | Live answer generation                              | Successfully verified before API became unavailable during development         |  Verified |
-| G-02    | LLM unavailable handling                            | Application continues to display retrieved sources and chunks without crashing | ✅ Pass                |
-| G-03    | Live answer generation after API became unavailable | *           |
-
----
+| G-01 | Live mixed-question answer generation | Verified with 5 questions | ✅ Pass |
+| G-02    | LLM unavailable handling                            | Application continues to display retrieved sources and chunks without crashing | ✅ Pass |
+          
+----
 
 # RAG Application Test Results
 
-Date: 13 July 2026
+Date: 14 July 2026
 
 ---
 
@@ -280,15 +279,11 @@ Status: ✅ PASS
 
 Result:
 
-Gemini API quota exceeded during testing.
+- Live Gemini answers verified using 5 mixed/document-specific questions.
+- Sources, page numbers, chunks, and retrieved context were displayed.
+- LLM unavailable fallback was also tested earlier and handled correctly.
 
-The application correctly:
-
-- Handled the API exception.
-- Displayed an informative message.
-- Continued showing retrieved context.
-
-Status: verified
+Status: ✅ PASS
 
 
 
@@ -326,9 +321,9 @@ Status: ✅ PASS
 
 ## Remarks
 
-The Retrieval-Augmented Generation (RAG) pipeline has been successfully validated up to the retrieval stage.
+The Retrieval-Augmented Generation (RAG) pipeline has been successfully validated through retrieval and Gemini answer generation.
 
-The only pending validation is the final Gemini-generated response due to temporary API quota exhaustion. Once the quota resets, only the final answer-generation test needs to be repeated.
+
 ## Overall Status
 
 * ✅ Document upload verified
@@ -338,7 +333,7 @@ The only pending validation is the final Gemini-generated response due to tempor
 * ✅ ChromaDB integration verified
 * ✅ Retrieval pipeline verified
 * ✅ Source citation verified
-* ✅ Single-document workflow verified
+* ✅ Multiple-document workflow verified
 * ✅ Session reset verified
 * ✅ Graceful handling when the LLM/API is unavailable
 
