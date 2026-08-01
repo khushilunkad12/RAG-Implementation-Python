@@ -8,9 +8,7 @@ from ragas import evaluate
 
 from ragas.metrics import (
     faithfulness,
-    answer_relevancy,
-    context_precision,
-    context_recall
+    answer_relevancy
 )
 
 # ==========================================
@@ -58,7 +56,7 @@ for sample in evaluation_dataset:
     print("✓ Completed")
 
     # Prevent Gemini rate limit
-    time.sleep(20)
+    time.sleep(5)
 
 print("\nEvaluation Dataset Created!")
 
@@ -89,9 +87,7 @@ scores = evaluate(
     dataset=dataset,
     metrics=[
         faithfulness,
-        answer_relevancy,
-        context_precision,
-        context_recall
+        answer_relevancy
     ],
     llm=llm,
     embeddings=embeddings
