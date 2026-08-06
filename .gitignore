@@ -1,15 +1,5 @@
-# Virtual Environment
 venv/
-
-# Environment Variables
-.env
-
-# Chroma Database
-chroma_db/
-
-# Generated Output
-output_chunks.json
-
-# Python Cache
+venv_old/
 __pycache__/
 *.pyc
+.env
