@@ -1,23 +1,18 @@
-
 import os
 from dotenv import load_dotenv
-
-from langchain_google_genai import (
-    ChatGoogleGenerativeAI,
-    GoogleGenerativeAIEmbeddings
-)
+from langchain_groq import ChatGroq
+from langchain_huggingface import HuggingFaceEmbeddings
 
 load_dotenv()
 
-api_key = os.getenv("GEMINI_API_KEY")
-
-llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
+# Judge LLM -> Groq (free, generous limits)
+llm = ChatGroq(
+    model="llama-3.3-70b-versatile",
     temperature=0,
-    google_api_key=api_key
+    api_key=os.getenv("GROQ_API_KEY")
 )
 
-embeddings = GoogleGenerativeAIEmbeddings(
-    model="models/text-embedding-004",
-    google_api_key=api_key
+# Embeddings -> local, runs on your machine, no quota, unlimited
+embeddings = HuggingFaceEmbeddings(
+    model_name="all-MiniLM-L6-v2"
 )
