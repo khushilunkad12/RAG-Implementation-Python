@@ -1,65 +1,17 @@
-from google import genai
 import os
 from dotenv import load_dotenv
-
+from langchain_groq import ChatGroq
 from retriever import retrieve_chunks
 
-# ==========================================
-# 1. Load Gemini Client
-# ==========================================
-
-def get_gemini_client():
-    """
-    Loads the Gemini client when needed.
-    """
-
-    load_dotenv()
-
-    api_key = os.getenv("GEMINI_API_KEY")
-
-    if not api_key:
-        raise ValueError(
-            "GEMINI_API_KEY not found. Please add it to the .env file."
-        )
-
-    return genai.Client(api_key=api_key)
-
-
-# ==========================================
-# 2. Generate RAG Answer
-# ==========================================
+load_dotenv()
 
 def generate_answer(query):
-    """
-    Retrieves relevant chunks and generates
-    an answer using Gemini.
-
-    Returns:
-        answer
-        metadatas
-        documents
-        distances
-    """
-
     ids, documents, metadatas, distances = retrieve_chunks(query)
-
-    # ==========================================
-    # Build Context
-    # ==========================================
-
     context = "\n\n".join(documents)
 
-    # ==========================================
-    # Prompt
-    # ==========================================
-
-    prompt = f"""
-You are a helpful AI assistant.
-
+    prompt = f"""You are a helpful AI assistant.
 Answer ONLY using the information provided in the context below.
-
 If the answer cannot be found in the context, reply exactly:
-
 Not enough information in the uploaded documents.
 
 Context:
@@ -68,36 +20,18 @@ Context:
 Question:
 {query}
 """
-
-    # ==========================================
-    # Gemini
-    # ==========================================
-
     try:
-
-        gemini_client = get_gemini_client()
-
-        response = gemini_client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=prompt
+        llm = ChatGroq(
+            model="llama-3.3-70b-versatile",
+            temperature=0,
+            api_key=os.getenv("GROQ_API_KEY"),
         )
-
-        answer = response.text
-
+        answer = llm.invoke(prompt).content
     except Exception as e:
+        print(f"Groq Error: {e}")
+        answer = "LLM/API unavailable."
 
-        print(f"Gemini Error: {e}")
-
-        answer = (
-            "LLM/API unavailable. Retrieved context is shown below."
-        )
-
-    return (
-        answer,
-        metadatas,
-        documents,
-        distances
-    )
+    return answer, metadatas, documents, distances
 
 
 # ==========================================

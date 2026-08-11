@@ -79,7 +79,7 @@ def get_collection():
 # 3. Retrieval Function
 # ==========================================
 
-def retrieve_chunks(query, top_k=5):
+def retrieve_chunks(query, top_k=8):
     """
     Retrieves the most relevant chunks
     for the given user query.

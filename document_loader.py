@@ -31,7 +31,9 @@ def read_pdf(file_path):
     for page_number, page in enumerate(reader.pages, start=1):
 
         text = page.extract_text()
+        if text:
 
+             text = " ".join(text.split())
         if text and text.strip():
 
             pages.append(
