@@ -1,5 +1,5 @@
 import chromadb
-from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer, CrossEncoder
 
 # ==========================================
 # 1. Load Embedding Model
@@ -9,27 +9,61 @@ from sentence_transformers import SentenceTransformer
 # Embedding Model (Lazy Loading)
 # ==========================================
 
-model = None
-
+_model = None
 
 def get_model():
     """
     Loads the embedding model only once.
     """
+    global _model
 
-    global model
-
-    if model is None:
-
+    if _model is None:
         print("Loading embedding model...")
 
-        model = SentenceTransformer(
+        _model = SentenceTransformer(
             "all-MiniLM-L6-v2"
         )
 
         print("Embedding model loaded.")
 
-    return model
+    return _model
+
+
+_reranker = None
+
+def get_reranker():
+    """
+    Loads the CrossEncoder reranker only once.
+    """
+    global _reranker
+
+    if _reranker is None:
+        print("Loading reranker...")
+
+        _reranker = CrossEncoder(
+            "cross-encoder/ms-marco-MiniLM-L-6-v2"
+        )
+
+        print("Reranker loaded.")
+
+    return _reranker
+    """
+    Loads the embedding model only once.
+    """
+
+    global _model
+
+    if _model is None:
+
+        print("Loading embedding model...")
+
+        _model = SentenceTransformer(
+            "all-MiniLM-L6-v2"
+        )
+
+        print("Embedding model loaded.")
+
+    return _model
 
 
 # ==========================================
@@ -79,18 +113,8 @@ def get_collection():
 # 3. Retrieval Function
 # ==========================================
 
-def retrieve_chunks(query, top_k=8):
-    """
-    Retrieves the most relevant chunks
-    for the given user query.
-
-    Returns:
-        ids
-        documents
-        metadatas
-        distances
-    """
-
+def retrieve_chunks(query, top_k=15, top_n=5):
+    # Stage 1: embedding retrieval
     model = get_model()
 
     query_embedding = model.encode(query).tolist()
@@ -106,6 +130,31 @@ def retrieve_chunks(query, top_k=8):
     documents = results["documents"][0]
     metadatas = results["metadatas"][0]
     distances = results["distances"][0]
+
+    # Stage 2: reranking
+    reranker = get_reranker()
+
+    pairs = [(query, doc) for doc in documents]
+
+    scores = reranker.predict(pairs)
+
+    # Sort by reranker score
+    ranked = sorted(
+        zip(
+            scores,
+            ids,
+            documents,
+            metadatas,
+            distances
+        ),
+        key=lambda x: x[0],
+        reverse=True
+    )[:top_n]
+
+    ids = [r[1] for r in ranked]
+    documents = [r[2] for r in ranked]
+    metadatas = [r[3] for r in ranked]
+    distances = [r[4] for r in ranked]
 
     return ids, documents, metadatas, distances
 
