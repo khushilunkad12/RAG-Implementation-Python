@@ -9,6 +9,17 @@ evaluation_dataset = [
         "ground_truth": "Python is a high-level, interpreted programming language."
     },
 
+{
+    "question": "where is it used?",
+    "ground_truth": "Python is widely used in web development, data analysis, artificial intelligence, machine learning, scientific computing, and automation."
+},
+
+{
+    "question": "why is it easy to learn?",
+    "ground_truth": "Python is easy to learn because it emphasizes simplicity and readability and uses plain English-like words."
+},
+
+
     {
         "question": "What are the features of Python?",
         "ground_truth": "Python is simple, easy to learn, interpreted, object-oriented, portable and supports a large standard library."

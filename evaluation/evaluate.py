@@ -1,3 +1,4 @@
+print("EVALUATE.PY STARTED")
 import os
 import sys
 import time
