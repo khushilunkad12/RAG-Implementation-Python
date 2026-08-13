@@ -1,4 +1,4 @@
-print("EVALUATE.PY STARTED")
+
 import os
 import sys
 import time
@@ -31,6 +31,7 @@ from ragas_config import llm, embeddings
 # ==========================================
 
 results = []
+chat_history = []
 
 print("=" * 70)
 print("Running Evaluation Dataset...")
@@ -43,7 +44,7 @@ for sample in evaluation_dataset:
 
     print(f"\nQuestion: {question}")
 
-    answer, metadata, documents, distances = generate_answer(question)
+    answer, metadata, documents, distances = generate_answer(question, chat_history)
 
     results.append(
         {
