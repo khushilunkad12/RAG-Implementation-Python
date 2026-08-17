@@ -207,18 +207,19 @@ def generate_answer(query, chat_history=None):
     # --------------------------------------
 
     prompt = f"""
-You are a helpful AI assistant.
+You are a helpful AI assistant for a Retrieval-Augmented Generation system.
 
-Answer the exact question directly first.
-Do not add extra explanation unless it is needed.
-Keep the answer concise and focused.
+Answer the question directly in 1 complete sentence.
 
-Answer ONLY using the information provided
-in the context below.
+Use ONLY the retrieved context.
 
-If the answer cannot be found in the context,
-reply exactly:
-
+Rules:
+- Include all important terms and entities from the context that directly answer the question.
+- Do not add outside knowledge.
+- Do not assume or infer information that is not explicitly supported by the context.
+- Do not add extra explanation or unrelated information.
+- If the question asks for multiple items, include all relevant items from the context.
+- If the answer cannot be found in the context, reply exactly:
 Not enough information in the uploaded documents.
 
 Context:
@@ -258,7 +259,7 @@ Question:
         "content": answer
     })
 
-    return answer, metadatas, documents, distances
+    return answer, metadatas, documents, distances, rewritten_query
 
 def main():
 
@@ -277,7 +278,7 @@ def main():
             print("Question cannot be empty.")
             continue
 
-        answer, metadatas, _, _ = generate_answer(
+        answer, metadatas, _, _, _ = generate_answer(
             query,
             chat_history
         )

@@ -9,7 +9,9 @@ from ragas import evaluate
 
 from ragas.metrics import (
     faithfulness,
-    answer_relevancy
+    answer_relevancy,
+    context_precision,
+    context_recall
 )
 
 # ==========================================
@@ -44,16 +46,21 @@ for sample in evaluation_dataset:
 
     print(f"\nQuestion: {question}")
 
-    answer, metadata, documents, distances = generate_answer(question, chat_history)
+    answer, metadata, documents, distances, rewritten_query = generate_answer(
+    question,
+    chat_history
+)
 
     results.append(
-        {
-            "question": question,
-            "answer": answer,
-            "contexts": documents,
-            "ground_truth": ground_truth,
-        }
-    )
+    {
+        "question": question,
+        "rewritten_query": rewritten_query,
+        "retrieved_top_1": documents[0] if documents else "",
+        "answer": answer,
+        "contexts": documents,
+        "ground_truth": ground_truth,
+    }
+)
 
     print("✓ Completed")
 
@@ -87,10 +94,12 @@ print("=" * 70)
 
 scores = evaluate(
     dataset=dataset,
-    metrics=[
-        faithfulness,
-        answer_relevancy
-    ],
+    metrics = [
+    answer_relevancy,
+    faithfulness,
+    context_precision,
+    context_recall
+],
     llm=llm,
     embeddings=embeddings
 )
