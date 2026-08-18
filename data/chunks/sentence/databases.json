@@ -1,0 +1,38 @@
+[
+  {
+    "chunk_id": "databases.txt_0",
+    "source": "databases.txt",
+    "chunk_index": 0,
+    "text": "# Database Systems A database is an organized collection of information that can be stored, updated, and retrieved efficiently. Database management systems provide software for defining structures, executing queries, maintaining consistency, controlling access, and recovering data after failures. ## Relational Databases Relational databases organize information into tables containing rows and columns. Each row represents a record and each column represents an attribute."
+  },
+  {
+    "chunk_id": "databases.txt_1",
+    "source": "databases.txt",
+    "chunk_index": 1,
+    "text": "SQL is commonly used to create tables, insert data, update records, and retrieve information. A primary key uniquely identifies a row. Foreign keys establish relationships between tables. Constraints can enforce rules such as uniqueness, non-null values, and valid references. ## Normalization Database normalization is a design process used to reduce unnecessary duplication and improve data consistency. A normalized schema often separates different entities into related tables."
+  },
+  {
+    "chunk_id": "databases.txt_2",
+    "source": "databases.txt",
+    "chunk_index": 2,
+    "text": "Poorly designed databases may store the same information in many places. When one copy is updated and another is not, inconsistent data can result. Normalization reduces these anomalies, although highly normalized designs may sometimes require additional joins. ## Indexes An index is a data structure that can make searches faster by allowing the database to locate records without scanning every row."
+  },
+  {
+    "chunk_id": "databases.txt_3",
+    "source": "databases.txt",
+    "chunk_index": 3,
+    "text": "Indexes are useful for frequently queried columns, but they also consume storage and may increase the cost of insert and update operations. Database administrators choose indexes based on query patterns. An index that helps one query may not benefit another query, so performance should be measured rather than assumed. ## Transactions A transaction groups multiple database operations into a logical unit."
+  },
+  {
+    "chunk_id": "databases.txt_4",
+    "source": "databases.txt",
+    "chunk_index": 4,
+    "text": "Transaction systems are commonly discussed using the ACID properties: atomicity, consistency, isolation, and durability. Concurrency control is important when multiple users access data simultaneously. Locking, timestamps, and other techniques can prevent conflicting operations from producing invalid results. ## Recovery and Security Database systems maintain logs and recovery mechanisms to protect information from failures. Backups provide another layer of protection."
+  },
+  {
+    "chunk_id": "databases.txt_5",
+    "source": "databases.txt",
+    "chunk_index": 5,
+    "text": "Security includes authentication, authorization, encryption, and auditing. Applications should use parameterized queries or other safe mechanisms to reduce the risk of SQL injection. Database performance depends on schema design, indexes, query structure, hardware, caching, and workload. Monitoring helps administrators identify slow queries and resource bottlenecks."
+  }
+]

@@ -1,0 +1,35 @@
+# Application Programming Interfaces
+
+An Application Programming Interface, or API, defines rules through which software components communicate. APIs allow one application to request data or functionality from another without needing to know its internal implementation.
+
+## HTTP APIs
+
+Web APIs commonly use HTTP. The GET method is generally used to retrieve information, POST to create resources, PUT or PATCH to update resources, and DELETE to remove resources.
+
+Requests may contain headers, parameters, query strings, and a body. Responses commonly contain a status code, headers, and data. JSON is a frequently used format for exchanging structured information.
+
+## REST
+
+REST is an architectural style commonly used for web APIs. RESTful APIs represent resources using URLs and use standard HTTP operations to interact with them.
+
+For example, an application might expose an endpoint for users and another for individual users. A client could request a collection of users with GET and create a new user with POST.
+
+## Authentication
+
+APIs often require authentication to protect resources. Common approaches include API keys, session-based authentication, OAuth, and token-based mechanisms.
+
+Authorization is separate from authentication. Authentication identifies the caller, while authorization determines what that caller can do.
+
+## Error Handling
+
+Well-designed APIs return meaningful status codes and structured error messages. A client can use these responses to determine whether a request succeeded or failed.
+
+Validation errors should clearly indicate which input is invalid. Server-side failures should not expose sensitive implementation details.
+
+## Testing
+
+API testing can verify status codes, response bodies, headers, validation, authentication, authorization, and error handling. Tools can send requests repeatedly and compare responses with expected results.
+
+Documentation is important because developers need to understand available endpoints, parameters, request formats, authentication requirements, and response structures.
+
+APIs are widely used in web applications, mobile applications, microservices, payment systems, and integrations between enterprise systems.

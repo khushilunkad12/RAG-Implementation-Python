@@ -1,0 +1,32 @@
+[
+  {
+    "chunk_id": "software_testing.txt_0",
+    "source": "software_testing.txt",
+    "chunk_index": 0,
+    "text": "# Software Testing Software testing is the systematic process of checking whether an application behaves as expected and identifying defects. Testing can begin early in development and continue throughout the software lifecycle. ## Testing Levels Unit testing checks small components such as functions or classes. Integration testing checks whether multiple components work correctly together."
+  },
+  {
+    "chunk_id": "software_testing.txt_1",
+    "source": "software_testing.txt",
+    "chunk_index": 1,
+    "text": "System testing evaluates the complete application, while acceptance testing determines whether the product meets business or user requirements. Different levels identify different types of problems. A unit test may detect an incorrect calculation, while an integration test may reveal an incorrect interaction between services. ## Functional Testing Functional testing verifies expected behavior. Test cases usually contain a setup, actions, expected result, and actual result."
+  },
+  {
+    "chunk_id": "software_testing.txt_2",
+    "source": "software_testing.txt",
+    "chunk_index": 2,
+    "text": "Examples include testing login, registration, search, payments, file uploads, and data validation. Boundary-value testing and equivalence partitioning can help testers select useful test cases. ## Non-Functional Testing Non-functional testing examines qualities such as performance, usability, reliability, accessibility, and security. Performance testing can measure response time and throughput under different loads."
+  },
+  {
+    "chunk_id": "software_testing.txt_3",
+    "source": "software_testing.txt",
+    "chunk_index": 3,
+    "text": "Usability testing evaluates whether users can understand and operate the interface effectively. Security testing checks whether applications protect data and restrict unauthorized operations. ## Automation Automated testing uses software tools to execute repeatable test cases. Automation is useful for regression testing because the same checks can be run after code changes. However, not every test should be automated. Exploratory testing and usability checks often benefit from human observation."
+  },
+  {
+    "chunk_id": "software_testing.txt_4",
+    "source": "software_testing.txt",
+    "chunk_index": 4,
+    "text": "## Defect Management A defect report should clearly describe the problem, steps to reproduce it, expected behavior, actual behavior, severity, and supporting evidence. Screenshots, logs, or videos can make a defect easier to investigate. A good testing process does not only find bugs. It also provides feedback about requirements, usability, reliability, and overall product quality."
+  }
+]

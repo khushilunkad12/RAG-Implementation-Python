@@ -1,0 +1,29 @@
+# Machine Learning
+
+Machine learning is a branch of artificial intelligence that enables computer systems to learn patterns from data. Instead of writing every rule manually, a developer provides data and a learning algorithm that identifies relationships useful for prediction or decision-making.
+
+## Types of Learning
+
+Supervised learning uses labeled examples. Each training example contains input features and a known target value. Classification predicts categories, such as whether a transaction is fraudulent, while regression predicts numerical values, such as the expected price of a house.
+
+Unsupervised learning works with data that does not have target labels. Clustering groups similar observations, while dimensionality reduction represents data using fewer variables. These methods are often used for exploration, segmentation, visualization, and preprocessing.
+
+Reinforcement learning is based on interaction between an agent and an environment. The agent takes actions and receives rewards or penalties. Over time, the agent learns a strategy that attempts to maximize cumulative reward.
+
+## Data Preparation
+
+Data quality has a major effect on machine learning performance. Raw datasets may contain missing values, duplicate records, inconsistent formats, or extreme observations. Data preparation can include cleaning, encoding categorical variables, scaling numerical features, and selecting useful attributes.
+
+A dataset is commonly divided into training, validation, and test portions. The training set is used to fit a model. Validation data can help select parameters and compare approaches, while the test set provides an estimate of performance on unseen examples.
+
+## Model Evaluation
+
+Different problems require different evaluation measures. Classification can be evaluated using accuracy, precision, recall, F1 score, or a confusion matrix. Regression can use measures such as mean absolute error and mean squared error.
+
+A model that performs extremely well on training data but poorly on unseen data may be overfitting. Regularization, simpler models, more data, and appropriate validation procedures can help reduce this problem.
+
+## Applications
+
+Machine learning is used in recommendation systems, fraud detection, image recognition, natural language processing, forecasting, search, and anomaly detection. In production systems, model performance must be monitored because data distributions and user behavior can change over time.
+
+Successful machine learning projects require more than choosing an algorithm. Data collection, preprocessing, evaluation, deployment, monitoring, and communication of results are all important parts of the workflow.

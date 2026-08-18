@@ -1,0 +1,33 @@
+# Git Version Control
+
+Git is a distributed version control system used to track changes in files. It allows developers to maintain project history, experiment with branches, compare changes, and collaborate with other developers.
+
+## Repository Basics
+
+A Git repository contains the project history and configuration needed to track changes. A developer can create a repository locally or clone an existing remote repository.
+
+The working directory contains current files. The staging area identifies changes selected for the next commit. A commit records a snapshot of staged changes along with a message.
+
+## Common Commands
+
+The git status command shows the current state of the working directory. git add stages changes, while git commit creates a new commit. git log displays history.
+
+Remote repositories allow developers to share changes. git push sends local commits to a remote repository, while git pull retrieves changes and integrates them into the current branch.
+
+## Branches
+
+Branches allow developers to work on features or fixes without changing the main development line immediately. A branch can later be merged after the work has been reviewed.
+
+Feature branches are commonly used in team development. Pull requests provide a place to discuss changes, review code, and run automated checks before merging.
+
+## Merge Conflicts
+
+A conflict can occur when two branches modify overlapping parts of a file. Git marks the conflicting sections so a developer can decide which content should remain.
+
+After resolving conflicts, the files are staged and a commit can record the resolution. Understanding history and reviewing changes carefully helps prevent accidental loss of work.
+
+## Good Practices
+
+Useful Git practices include making focused commits, writing clear messages, pulling changes regularly, and avoiding unnecessary generated files in repositories.
+
+Git supports many workflows, but the best workflow depends on the team and project. Version control is valuable because it provides traceability and makes experimentation safer.

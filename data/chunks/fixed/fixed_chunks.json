@@ -1,0 +1,401 @@
+[
+  {
+    "chunk_id": 0,
+    "chunk_text": "# Application Programming Interfaces\n\nAn Application Programming Interface, or API, defines rules through which software components communicate. APIs allow one application to request data or functionality from another without needing to know its internal implementation.\n\n## HTTP APIs\n\nWeb APIs commonly use HTTP. The GET method is generally used to retrieve information, POST to create resources, PUT or PATCH to update resources, and DELETE to remove resources.\n\nRequests may contain headers, param",
+    "start_position": 0,
+    "end_position": 500,
+    "source": "APIs.txt"
+  },
+  {
+    "chunk_id": 1,
+    "chunk_text": "ve resources.\n\nRequests may contain headers, parameters, query strings, and a body. Responses commonly contain a status code, headers, and data. JSON is a frequently used format for exchanging structured information.\n\n## REST\n\nREST is an architectural style commonly used for web APIs. RESTful APIs represent resources using URLs and use standard HTTP operations to interact with them.\n\nFor example, an application might expose an endpoint for users and another for individual users. A client could r",
+    "start_position": 450,
+    "end_position": 950,
+    "source": "APIs.txt"
+  },
+  {
+    "chunk_id": 2,
+    "chunk_text": "and another for individual users. A client could request a collection of users with GET and create a new user with POST.\n\n## Authentication\n\nAPIs often require authentication to protect resources. Common approaches include API keys, session-based authentication, OAuth, and token-based mechanisms.\n\nAuthorization is separate from authentication. Authentication identifies the caller, while authorization determines what that caller can do.\n\n## Error Handling\n\nWell-designed APIs return meaningful sta",
+    "start_position": 900,
+    "end_position": 1400,
+    "source": "APIs.txt"
+  },
+  {
+    "chunk_id": 3,
+    "chunk_text": "Handling\n\nWell-designed APIs return meaningful status codes and structured error messages. A client can use these responses to determine whether a request succeeded or failed.\n\nValidation errors should clearly indicate which input is invalid. Server-side failures should not expose sensitive implementation details.\n\n## Testing\n\nAPI testing can verify status codes, response bodies, headers, validation, authentication, authorization, and error handling. Tools can send requests repeatedly and compar",
+    "start_position": 1350,
+    "end_position": 1850,
+    "source": "APIs.txt"
+  },
+  {
+    "chunk_id": 4,
+    "chunk_text": "ing. Tools can send requests repeatedly and compare responses with expected results.\n\nDocumentation is important because developers need to understand available endpoints, parameters, request formats, authentication requirements, and response structures.\n\nAPIs are widely used in web applications, mobile applications, microservices, payment systems, and integrations between enterprise systems.\n",
+    "start_position": 1800,
+    "end_position": 2196,
+    "source": "APIs.txt"
+  },
+  {
+    "chunk_id": 0,
+    "chunk_text": "# Cloud Computing\n\nCloud computing provides computing resources through network-based services rather than requiring organizations to own and maintain all physical infrastructure themselves. Resources can include virtual machines, storage, databases, networking, and application platforms.\n\n## Service Models\n\nInfrastructure as a Service provides fundamental computing resources such as virtual machines and storage. Platform as a Service provides a managed environment where developers can deploy ap",
+    "start_position": 0,
+    "end_position": 500,
+    "source": "cloud.txt"
+  },
+  {
+    "chunk_id": 1,
+    "chunk_text": "managed environment where developers can deploy applications without managing every underlying component. Software as a Service delivers complete applications to users through a network.\n\nThe choice of service model affects how much infrastructure the customer manages. Managed services can reduce operational work, while lower-level services provide greater control.\n\n## Scalability\n\nOne major advantage of cloud platforms is the ability to adjust resources according to demand. Horizontal scaling a",
+    "start_position": 450,
+    "end_position": 950,
+    "source": "cloud.txt"
+  },
+  {
+    "chunk_id": 2,
+    "chunk_text": "esources according to demand. Horizontal scaling adds more instances, while vertical scaling increases the resources available to an existing instance.\n\nAutoscaling systems can respond to workload changes. During high traffic, additional capacity can be created. When demand falls, unused resources can be removed to reduce cost.\n\n## Storage and Databases\n\nCloud providers offer object storage, block storage, file storage, and managed databases. Object storage is often used for documents, images, b",
+    "start_position": 900,
+    "end_position": 1400,
+    "source": "cloud.txt"
+  },
+  {
+    "chunk_id": 3,
+    "chunk_text": "ect storage is often used for documents, images, backups, and other large collections of files.\n\nManaged databases reduce the operational burden of backups, patching, monitoring, and maintenance. However, application developers still need to understand data models, query performance, security, and availability requirements.\n\n## Security\n\nCloud security involves identity management, access policies, encryption, network controls, monitoring, and secure configuration. Misconfigured permissions can ",
+    "start_position": 1350,
+    "end_position": 1850,
+    "source": "cloud.txt"
+  },
+  {
+    "chunk_id": 4,
+    "chunk_text": "cure configuration. Misconfigured permissions can expose data even when the underlying infrastructure is secure.\n\nOrganizations often use least-privilege access, multi-factor authentication, logging, and regular security reviews.\n\n## Costs\n\nCloud pricing can depend on compute usage, storage, network traffic, and managed services. Poorly controlled resources can lead to unexpected bills. Cost monitoring and resource tagging can help organizations understand spending.\n\nCloud computing is therefore",
+    "start_position": 1800,
+    "end_position": 2300,
+    "source": "cloud.txt"
+  },
+  {
+    "chunk_id": 5,
+    "chunk_text": "understand spending.\n\nCloud computing is therefore not simply about moving applications to remote servers. Successful adoption requires planning for architecture, security, performance, reliability, and cost.\n",
+    "start_position": 2250,
+    "end_position": 2459,
+    "source": "cloud.txt"
+  },
+  {
+    "chunk_id": 0,
+    "chunk_text": "# Cybersecurity\n\nCybersecurity focuses on protecting systems, networks, applications, and information from unauthorized access, misuse, disruption, or destruction. Modern security requires multiple layers because no single control can prevent every type of attack.\n\n## Common Threats\n\nPhishing attacks attempt to trick users into revealing credentials or performing unsafe actions. Malware includes malicious software such as viruses, spyware, and ransomware. Ransomware can encrypt files and demand ",
+    "start_position": 0,
+    "end_position": 500,
+    "source": "cybersecurity.txt"
+  },
+  {
+    "chunk_id": 1,
+    "chunk_text": "nsomware. Ransomware can encrypt files and demand payment.\n\nPassword attacks may involve guessing, credential stuffing, or brute-force techniques. Stolen credentials can allow attackers to access systems without exploiting a technical vulnerability.\n\n## Authentication\n\nAuthentication verifies who a user or service is. Passwords are common but should be combined with additional protections where possible. Multi-factor authentication requires another factor, such as a security key or authenticator",
+    "start_position": 450,
+    "end_position": 950,
+    "source": "cybersecurity.txt"
+  },
+  {
+    "chunk_id": 2,
+    "chunk_text": "er factor, such as a security key or authenticator application.\n\nAuthorization determines what an authenticated identity is allowed to access. Least privilege means granting only the permissions required to perform a task.\n\n## Network Security\n\nFirewalls can restrict unwanted network traffic. Network segmentation can limit the movement of attackers between systems. Encryption protects information while it is being transmitted or stored.\n\nSecure configuration is also important. Unnecessary servic",
+    "start_position": 900,
+    "end_position": 1400,
+    "source": "cybersecurity.txt"
+  },
+  {
+    "chunk_id": 3,
+    "chunk_text": "onfiguration is also important. Unnecessary services and open ports can increase the attack surface.\n\n## Application Security\n\nDevelopers should consider security during the entire software lifecycle. Input validation, secure authentication, dependency updates, and safe error handling can reduce vulnerabilities.\n\nSQL injection is an example of an attack that can occur when applications construct database queries unsafely. Parameterized queries help separate data from SQL instructions.\n\n## Incide",
+    "start_position": 1350,
+    "end_position": 1850,
+    "source": "cybersecurity.txt"
+  },
+  {
+    "chunk_id": 4,
+    "chunk_text": "lp separate data from SQL instructions.\n\n## Incident Response\n\nSecurity incidents require preparation as well as technical controls. Organizations may maintain monitoring systems, alerting processes, backups, and incident-response plans.\n\nAfter an incident, teams investigate what happened, contain the problem, recover affected systems, and identify improvements. Regular security testing and employee awareness training can reduce future risk.\n",
+    "start_position": 1800,
+    "end_position": 2246,
+    "source": "cybersecurity.txt"
+  },
+  {
+    "chunk_id": 0,
+    "chunk_text": "# Database Systems\n\nA database is an organized collection of information that can be stored, updated, and retrieved efficiently. Database management systems provide software for defining structures, executing queries, maintaining consistency, controlling access, and recovering data after failures.\n\n## Relational Databases\n\nRelational databases organize information into tables containing rows and columns. Each row represents a record and each column represents an attribute. SQL is commonly used t",
+    "start_position": 0,
+    "end_position": 500,
+    "source": "databases.txt"
+  },
+  {
+    "chunk_id": 1,
+    "chunk_text": "mn represents an attribute. SQL is commonly used to create tables, insert data, update records, and retrieve information.\n\nA primary key uniquely identifies a row. Foreign keys establish relationships between tables. Constraints can enforce rules such as uniqueness, non-null values, and valid references.\n\n## Normalization\n\nDatabase normalization is a design process used to reduce unnecessary duplication and improve data consistency. A normalized schema often separates different entities into rel",
+    "start_position": 450,
+    "end_position": 950,
+    "source": "databases.txt"
+  },
+  {
+    "chunk_id": 2,
+    "chunk_text": "schema often separates different entities into related tables.\n\nPoorly designed databases may store the same information in many places. When one copy is updated and another is not, inconsistent data can result. Normalization reduces these anomalies, although highly normalized designs may sometimes require additional joins.\n\n## Indexes\n\nAn index is a data structure that can make searches faster by allowing the database to locate records without scanning every row. Indexes are useful for frequent",
+    "start_position": 900,
+    "end_position": 1400,
+    "source": "databases.txt"
+  },
+  {
+    "chunk_id": 3,
+    "chunk_text": "canning every row. Indexes are useful for frequently queried columns, but they also consume storage and may increase the cost of insert and update operations.\n\nDatabase administrators choose indexes based on query patterns. An index that helps one query may not benefit another query, so performance should be measured rather than assumed.\n\n## Transactions\n\nA transaction groups multiple database operations into a logical unit. Transaction systems are commonly discussed using the ACID properties: a",
+    "start_position": 1350,
+    "end_position": 1850,
+    "source": "databases.txt"
+  },
+  {
+    "chunk_id": 4,
+    "chunk_text": "re commonly discussed using the ACID properties: atomicity, consistency, isolation, and durability.\n\nConcurrency control is important when multiple users access data simultaneously. Locking, timestamps, and other techniques can prevent conflicting operations from producing invalid results.\n\n## Recovery and Security\n\nDatabase systems maintain logs and recovery mechanisms to protect information from failures. Backups provide another layer of protection.\n\nSecurity includes authentication, authoriza",
+    "start_position": 1800,
+    "end_position": 2300,
+    "source": "databases.txt"
+  },
+  {
+    "chunk_id": 5,
+    "chunk_text": "tion.\n\nSecurity includes authentication, authorization, encryption, and auditing. Applications should use parameterized queries or other safe mechanisms to reduce the risk of SQL injection.\n\nDatabase performance depends on schema design, indexes, query structure, hardware, caching, and workload. Monitoring helps administrators identify slow queries and resource bottlenecks.\n",
+    "start_position": 2250,
+    "end_position": 2627,
+    "source": "databases.txt"
+  },
+  {
+    "chunk_id": 0,
+    "chunk_text": "# Git Version Control\n\nGit is a distributed version control system used to track changes in files. It allows developers to maintain project history, experiment with branches, compare changes, and collaborate with other developers.\n\n## Repository Basics\n\nA Git repository contains the project history and configuration needed to track changes. A developer can create a repository locally or clone an existing remote repository.\n\nThe working directory contains current files. The staging area identifie",
+    "start_position": 0,
+    "end_position": 500,
+    "source": "git.txt"
+  },
+  {
+    "chunk_id": 1,
+    "chunk_text": "contains current files. The staging area identifies changes selected for the next commit. A commit records a snapshot of staged changes along with a message.\n\n## Common Commands\n\nThe git status command shows the current state of the working directory. git add stages changes, while git commit creates a new commit. git log displays history.\n\nRemote repositories allow developers to share changes. git push sends local commits to a remote repository, while git pull retrieves changes and integrates th",
+    "start_position": 450,
+    "end_position": 950,
+    "source": "git.txt"
+  },
+  {
+    "chunk_id": 2,
+    "chunk_text": "while git pull retrieves changes and integrates them into the current branch.\n\n## Branches\n\nBranches allow developers to work on features or fixes without changing the main development line immediately. A branch can later be merged after the work has been reviewed.\n\nFeature branches are commonly used in team development. Pull requests provide a place to discuss changes, review code, and run automated checks before merging.\n\n## Merge Conflicts\n\nA conflict can occur when two branches modify overla",
+    "start_position": 900,
+    "end_position": 1400,
+    "source": "git.txt"
+  },
+  {
+    "chunk_id": 3,
+    "chunk_text": "conflict can occur when two branches modify overlapping parts of a file. Git marks the conflicting sections so a developer can decide which content should remain.\n\nAfter resolving conflicts, the files are staged and a commit can record the resolution. Understanding history and reviewing changes carefully helps prevent accidental loss of work.\n\n## Good Practices\n\nUseful Git practices include making focused commits, writing clear messages, pulling changes regularly, and avoiding unnecessary genera",
+    "start_position": 1350,
+    "end_position": 1850,
+    "source": "git.txt"
+  },
+  {
+    "chunk_id": 4,
+    "chunk_text": "changes regularly, and avoiding unnecessary generated files in repositories.\n\nGit supports many workflows, but the best workflow depends on the team and project. Version control is valuable because it provides traceability and makes experimentation safer.\n",
+    "start_position": 1800,
+    "end_position": 2056,
+    "source": "git.txt"
+  },
+  {
+    "chunk_id": 0,
+    "chunk_text": "# Machine Learning\n\nMachine learning is a branch of artificial intelligence that enables computer systems to learn patterns from data. Instead of writing every rule manually, a developer provides data and a learning algorithm that identifies relationships useful for prediction or decision-making.\n\n## Types of Learning\n\nSupervised learning uses labeled examples. Each training example contains input features and a known target value. Classification predicts categories, such as whether a transactio",
+    "start_position": 0,
+    "end_position": 500,
+    "source": "machine_learning.txt"
+  },
+  {
+    "chunk_id": 1,
+    "chunk_text": " predicts categories, such as whether a transaction is fraudulent, while regression predicts numerical values, such as the expected price of a house.\n\nUnsupervised learning works with data that does not have target labels. Clustering groups similar observations, while dimensionality reduction represents data using fewer variables. These methods are often used for exploration, segmentation, visualization, and preprocessing.\n\nReinforcement learning is based on interaction between an agent and an e",
+    "start_position": 450,
+    "end_position": 950,
+    "source": "machine_learning.txt"
+  },
+  {
+    "chunk_id": 2,
+    "chunk_text": " is based on interaction between an agent and an environment. The agent takes actions and receives rewards or penalties. Over time, the agent learns a strategy that attempts to maximize cumulative reward.\n\n## Data Preparation\n\nData quality has a major effect on machine learning performance. Raw datasets may contain missing values, duplicate records, inconsistent formats, or extreme observations. Data preparation can include cleaning, encoding categorical variables, scaling numerical features, an",
+    "start_position": 900,
+    "end_position": 1400,
+    "source": "machine_learning.txt"
+  },
+  {
+    "chunk_id": 3,
+    "chunk_text": "egorical variables, scaling numerical features, and selecting useful attributes.\n\nA dataset is commonly divided into training, validation, and test portions. The training set is used to fit a model. Validation data can help select parameters and compare approaches, while the test set provides an estimate of performance on unseen examples.\n\n## Model Evaluation\n\nDifferent problems require different evaluation measures. Classification can be evaluated using accuracy, precision, recall, F1 score, or",
+    "start_position": 1350,
+    "end_position": 1850,
+    "source": "machine_learning.txt"
+  },
+  {
+    "chunk_id": 4,
+    "chunk_text": "ed using accuracy, precision, recall, F1 score, or a confusion matrix. Regression can use measures such as mean absolute error and mean squared error.\n\nA model that performs extremely well on training data but poorly on unseen data may be overfitting. Regularization, simpler models, more data, and appropriate validation procedures can help reduce this problem.\n\n## Applications\n\nMachine learning is used in recommendation systems, fraud detection, image recognition, natural language processing, fo",
+    "start_position": 1800,
+    "end_position": 2300,
+    "source": "machine_learning.txt"
+  },
+  {
+    "chunk_id": 5,
+    "chunk_text": "image recognition, natural language processing, forecasting, search, and anomaly detection. In production systems, model performance must be monitored because data distributions and user behavior can change over time.\n\nSuccessful machine learning projects require more than choosing an algorithm. Data collection, preprocessing, evaluation, deployment, monitoring, and communication of results are all important parts of the workflow.\n",
+    "start_position": 2250,
+    "end_position": 2685,
+    "source": "machine_learning.txt"
+  },
+  {
+    "chunk_id": 0,
+    "chunk_text": "# Operating Systems\n\nAn operating system manages hardware resources and provides services that allow application programs to run. It acts as an interface between software and physical hardware.\n\n## Processes\n\nA process is a program in execution. The operating system creates and manages processes, allocates resources, and schedules them for execution.\n\nProcesses may contain multiple threads. Threads share certain process resources while allowing multiple activities to execute concurrently. Contex",
+    "start_position": 0,
+    "end_position": 500,
+    "source": "operating_systems.txt"
+  },
+  {
+    "chunk_id": 1,
+    "chunk_text": "ultiple activities to execute concurrently. Context switching allows the CPU to move between runnable tasks.\n\n## CPU Scheduling\n\nCPU scheduling determines which ready process should execute. Common scheduling approaches include first-come first-served, shortest-job-first, priority scheduling, and round-robin.\n\nScheduling goals can include reducing waiting time, improving response time, and keeping the processor efficiently utilized.\n\n## Memory Management\n\nOperating systems manage physical memory",
+    "start_position": 450,
+    "end_position": 950,
+    "source": "operating_systems.txt"
+  },
+  {
+    "chunk_id": 2,
+    "chunk_text": "nagement\n\nOperating systems manage physical memory and provide processes with address spaces. Virtual memory allows systems to use secondary storage as an extension of physical memory.\n\nPaging divides memory into fixed-size pages and frames. A page table maps virtual pages to physical frames. If a required page is not currently in memory, a page fault can occur.\n\n## File Systems\n\nFile systems organize persistent information on storage devices. They provide operations for creating, reading, writi",
+    "start_position": 900,
+    "end_position": 1400,
+    "source": "operating_systems.txt"
+  },
+  {
+    "chunk_id": 3,
+    "chunk_text": "ey provide operations for creating, reading, writing, and deleting files and directories.\n\nFile allocation methods determine how blocks are assigned to files. File systems also maintain metadata such as file size, ownership, permissions, and timestamps.\n\n## Devices and Security\n\nOperating systems interact with hardware through device drivers and I/O mechanisms. Buffering and caching can improve performance when devices are slower than the CPU.\n\nSecurity mechanisms include user accounts, permissi",
+    "start_position": 1350,
+    "end_position": 1850,
+    "source": "operating_systems.txt"
+  },
+  {
+    "chunk_id": 4,
+    "chunk_text": "ecurity mechanisms include user accounts, permissions, isolation, authentication, and access control. These controls help prevent one process or user from accessing resources without permission.\n\nOperating systems therefore coordinate processes, memory, storage, devices, and security so that applications can run reliably.\n",
+    "start_position": 1800,
+    "end_position": 2124,
+    "source": "operating_systems.txt"
+  },
+  {
+    "chunk_id": 0,
+    "chunk_text": "# Python Programming\n\nPython is a high-level, interpreted programming language designed with an emphasis on readability and developer productivity. Its syntax is relatively concise, which makes it popular for teaching programming as well as for professional software development. A Python program can be written as a sequence of statements, organized into functions, classes, modules, and packages.\n\n## Language Features\n\nPython supports procedural, object-oriented, and functional programming styles",
+    "start_position": 0,
+    "end_position": 500,
+    "source": "python.txt"
+  },
+  {
+    "chunk_id": 1,
+    "chunk_text": "object-oriented, and functional programming styles. Variables do not require explicit type declarations in ordinary code, and the language provides built-in data structures such as lists, tuples, dictionaries, and sets. Exception handling allows programs to respond to errors without immediately terminating. Python also provides iterators, generators, decorators, context managers, and comprehensions for writing reusable and expressive programs.\n\nThe Python standard library contains modules for wo",
+    "start_position": 450,
+    "end_position": 950,
+    "source": "python.txt"
+  },
+  {
+    "chunk_id": 2,
+    "chunk_text": "he Python standard library contains modules for working with files, dates, regular expressions, JSON, networking, operating-system features, testing, and many other tasks. Developers can also install third-party packages through package managers such as pip. Virtual environments are commonly used to keep project dependencies isolated.\n\n## Common Uses\n\nPython is widely used in web development, data analysis, scientific computing, automation, scripting, and artificial intelligence. Web frameworks ",
+    "start_position": 900,
+    "end_position": 1400,
+    "source": "python.txt"
+  },
+  {
+    "chunk_id": 3,
+    "chunk_text": "ting, and artificial intelligence. Web frameworks such as Django and Flask can be used to build server-side applications and APIs. Data analysts use libraries such as pandas and NumPy to process datasets and perform numerical operations.\n\nIn machine learning, Python is commonly used with libraries and frameworks for model training, experimentation, and evaluation. Python is also useful for automation because scripts can interact with files, command-line tools, web services, and databases.\n\n## De",
+    "start_position": 1350,
+    "end_position": 1850,
+    "source": "python.txt"
+  },
+  {
+    "chunk_id": 4,
+    "chunk_text": "nd-line tools, web services, and databases.\n\n## Development Practices\n\nA typical Python project may contain source modules, tests, configuration files, documentation, and dependency specifications. Developers often use Git for version control and virtual environments for dependency management. Automated testing can be added using frameworks such as pytest or the standard unittest module.\n\nCode quality improves when functions have clear responsibilities, variables have meaningful names, and repea",
+    "start_position": 1800,
+    "end_position": 2300,
+    "source": "python.txt"
+  },
+  {
+    "chunk_id": 5,
+    "chunk_text": "lities, variables have meaningful names, and repeated logic is avoided. Formatting and linting tools can help teams maintain consistent code. Logging is useful for diagnosing problems in production applications.\n\n## Limitations\n\nPython prioritizes developer productivity rather than maximum execution speed. For CPU-intensive workloads, developers may use optimized libraries, parallel processing, compiled extensions, or another language for performance-critical components. Even with this limitatio",
+    "start_position": 2250,
+    "end_position": 2750,
+    "source": "python.txt"
+  },
+  {
+    "chunk_id": 6,
+    "chunk_text": "ance-critical components. Even with this limitation, Python remains a popular general-purpose language because its ecosystem and readability make development efficient.\n",
+    "start_position": 2700,
+    "end_position": 2869,
+    "source": "python.txt"
+  },
+  {
+    "chunk_id": 0,
+    "chunk_text": "# Retrieval-Augmented Generation\n\nRetrieval-Augmented Generation, commonly called RAG, combines information retrieval with language generation. The basic idea is to retrieve relevant information from an external knowledge source before asking a language model to produce an answer.\n\n## Document Processing\n\nA RAG pipeline usually begins with a collection of documents. Documents can be PDFs, web pages, text files, reports, manuals, or internal knowledge articles. Before retrieval, documents are cle",
+    "start_position": 0,
+    "end_position": 500,
+    "source": "rag.txt"
+  },
+  {
+    "chunk_id": 1,
+    "chunk_text": "edge articles. Before retrieval, documents are cleaned and divided into smaller chunks.\n\nChunking is important because very large pieces of text can contain unrelated information, while extremely small pieces may lose useful context. A chunk can contain a paragraph, several sentences, or a fixed number of characters or tokens. Overlap is sometimes used so that information near a chunk boundary is available in more than one chunk.\n\n## Embeddings and Vector Storage\n\nAfter chunking, an embedding mo",
+    "start_position": 450,
+    "end_position": 950,
+    "source": "rag.txt"
+  },
+  {
+    "chunk_id": 2,
+    "chunk_text": "nd Vector Storage\n\nAfter chunking, an embedding model converts each chunk into a numerical vector. The vector represents semantic characteristics of the text. Similar concepts should ideally produce vectors that are close to each other in embedding space.\n\nThe vectors can be stored in a vector database. When a user asks a question, the question is embedded using the same or a compatible embedding model. Similarity search then identifies candidate chunks that may contain the answer.\n\n## Retrieval",
+    "start_position": 900,
+    "end_position": 1400,
+    "source": "rag.txt"
+  },
+  {
+    "chunk_id": 3,
+    "chunk_text": " chunks that may contain the answer.\n\n## Retrieval and Reranking\n\nInitial retrieval may return several candidate documents. A reranker can examine the query and candidates in more detail and reorder them according to relevance. This two-stage approach can improve retrieval quality because the vector search provides broad recall while reranking provides a more precise ordering.\n\nRetrieval quality can be affected by chunk size, overlap, embedding quality, metadata, query formulation, and the numbe",
+    "start_position": 1350,
+    "end_position": 1850,
+    "source": "rag.txt"
+  },
+  {
+    "chunk_id": 4,
+    "chunk_text": "uality, metadata, query formulation, and the number of retrieved candidates. A system should therefore evaluate retrieval separately from answer generation.\n\n## Generation\n\nThe retrieved chunks are inserted into a prompt given to a language model. The model is instructed to answer using the supplied context. This can reduce hallucination because the model has access to relevant source material.\n\nA good generation prompt should make the answer direct, concise, and grounded. If the retrieved conte",
+    "start_position": 1800,
+    "end_position": 2300,
+    "source": "rag.txt"
+  },
+  {
+    "chunk_id": 5,
+    "chunk_text": "ect, concise, and grounded. If the retrieved context does not contain enough information, the application can return a controlled response rather than inventing an answer.\n\n## Evaluation\n\nRAG systems can be evaluated using measures such as faithfulness, answer relevancy, context precision, and context recall. Faithfulness measures whether an answer is supported by retrieved context. Context recall considers whether relevant information was successfully retrieved.\n\nRAG is useful for document ques",
+    "start_position": 2250,
+    "end_position": 2750,
+    "source": "rag.txt"
+  },
+  {
+    "chunk_id": 6,
+    "chunk_text": "sfully retrieved.\n\nRAG is useful for document question answering, knowledge assistants, enterprise search, technical support, and research tools. Its effectiveness depends on the entire pipeline rather than only the language model.\n",
+    "start_position": 2700,
+    "end_position": 2932,
+    "source": "rag.txt"
+  },
+  {
+    "chunk_id": 0,
+    "chunk_text": "# Software Testing\n\nSoftware testing is the systematic process of checking whether an application behaves as expected and identifying defects. Testing can begin early in development and continue throughout the software lifecycle.\n\n## Testing Levels\n\nUnit testing checks small components such as functions or classes. Integration testing checks whether multiple components work correctly together. System testing evaluates the complete application, while acceptance testing determines whether the prod",
+    "start_position": 0,
+    "end_position": 500,
+    "source": "software_testing.txt"
+  },
+  {
+    "chunk_id": 1,
+    "chunk_text": "ile acceptance testing determines whether the product meets business or user requirements.\n\nDifferent levels identify different types of problems. A unit test may detect an incorrect calculation, while an integration test may reveal an incorrect interaction between services.\n\n## Functional Testing\n\nFunctional testing verifies expected behavior. Test cases usually contain a setup, actions, expected result, and actual result.\n\nExamples include testing login, registration, search, payments, file up",
+    "start_position": 450,
+    "end_position": 950,
+    "source": "software_testing.txt"
+  },
+  {
+    "chunk_id": 2,
+    "chunk_text": "ing login, registration, search, payments, file uploads, and data validation. Boundary-value testing and equivalence partitioning can help testers select useful test cases.\n\n## Non-Functional Testing\n\nNon-functional testing examines qualities such as performance, usability, reliability, accessibility, and security. Performance testing can measure response time and throughput under different loads.\n\nUsability testing evaluates whether users can understand and operate the interface effectively. Se",
+    "start_position": 900,
+    "end_position": 1400,
+    "source": "software_testing.txt"
+  },
+  {
+    "chunk_id": 3,
+    "chunk_text": "derstand and operate the interface effectively. Security testing checks whether applications protect data and restrict unauthorized operations.\n\n## Automation\n\nAutomated testing uses software tools to execute repeatable test cases. Automation is useful for regression testing because the same checks can be run after code changes.\n\nHowever, not every test should be automated. Exploratory testing and usability checks often benefit from human observation.\n\n## Defect Management\n\nA defect report shoul",
+    "start_position": 1350,
+    "end_position": 1850,
+    "source": "software_testing.txt"
+  },
+  {
+    "chunk_id": 4,
+    "chunk_text": "tion.\n\n## Defect Management\n\nA defect report should clearly describe the problem, steps to reproduce it, expected behavior, actual behavior, severity, and supporting evidence. Screenshots, logs, or videos can make a defect easier to investigate.\n\nA good testing process does not only find bugs. It also provides feedback about requirements, usability, reliability, and overall product quality.\n",
+    "start_position": 1800,
+    "end_position": 2194,
+    "source": "software_testing.txt"
+  }
+]

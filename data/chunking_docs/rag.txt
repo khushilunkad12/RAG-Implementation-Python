@@ -1,0 +1,33 @@
+# Retrieval-Augmented Generation
+
+Retrieval-Augmented Generation, commonly called RAG, combines information retrieval with language generation. The basic idea is to retrieve relevant information from an external knowledge source before asking a language model to produce an answer.
+
+## Document Processing
+
+A RAG pipeline usually begins with a collection of documents. Documents can be PDFs, web pages, text files, reports, manuals, or internal knowledge articles. Before retrieval, documents are cleaned and divided into smaller chunks.
+
+Chunking is important because very large pieces of text can contain unrelated information, while extremely small pieces may lose useful context. A chunk can contain a paragraph, several sentences, or a fixed number of characters or tokens. Overlap is sometimes used so that information near a chunk boundary is available in more than one chunk.
+
+## Embeddings and Vector Storage
+
+After chunking, an embedding model converts each chunk into a numerical vector. The vector represents semantic characteristics of the text. Similar concepts should ideally produce vectors that are close to each other in embedding space.
+
+The vectors can be stored in a vector database. When a user asks a question, the question is embedded using the same or a compatible embedding model. Similarity search then identifies candidate chunks that may contain the answer.
+
+## Retrieval and Reranking
+
+Initial retrieval may return several candidate documents. A reranker can examine the query and candidates in more detail and reorder them according to relevance. This two-stage approach can improve retrieval quality because the vector search provides broad recall while reranking provides a more precise ordering.
+
+Retrieval quality can be affected by chunk size, overlap, embedding quality, metadata, query formulation, and the number of retrieved candidates. A system should therefore evaluate retrieval separately from answer generation.
+
+## Generation
+
+The retrieved chunks are inserted into a prompt given to a language model. The model is instructed to answer using the supplied context. This can reduce hallucination because the model has access to relevant source material.
+
+A good generation prompt should make the answer direct, concise, and grounded. If the retrieved context does not contain enough information, the application can return a controlled response rather than inventing an answer.
+
+## Evaluation
+
+RAG systems can be evaluated using measures such as faithfulness, answer relevancy, context precision, and context recall. Faithfulness measures whether an answer is supported by retrieved context. Context recall considers whether relevant information was successfully retrieved.
+
+RAG is useful for document question answering, knowledge assistants, enterprise search, technical support, and research tools. Its effectiveness depends on the entire pipeline rather than only the language model.

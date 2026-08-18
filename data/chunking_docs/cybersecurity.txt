@@ -1,0 +1,33 @@
+# Cybersecurity
+
+Cybersecurity focuses on protecting systems, networks, applications, and information from unauthorized access, misuse, disruption, or destruction. Modern security requires multiple layers because no single control can prevent every type of attack.
+
+## Common Threats
+
+Phishing attacks attempt to trick users into revealing credentials or performing unsafe actions. Malware includes malicious software such as viruses, spyware, and ransomware. Ransomware can encrypt files and demand payment.
+
+Password attacks may involve guessing, credential stuffing, or brute-force techniques. Stolen credentials can allow attackers to access systems without exploiting a technical vulnerability.
+
+## Authentication
+
+Authentication verifies who a user or service is. Passwords are common but should be combined with additional protections where possible. Multi-factor authentication requires another factor, such as a security key or authenticator application.
+
+Authorization determines what an authenticated identity is allowed to access. Least privilege means granting only the permissions required to perform a task.
+
+## Network Security
+
+Firewalls can restrict unwanted network traffic. Network segmentation can limit the movement of attackers between systems. Encryption protects information while it is being transmitted or stored.
+
+Secure configuration is also important. Unnecessary services and open ports can increase the attack surface.
+
+## Application Security
+
+Developers should consider security during the entire software lifecycle. Input validation, secure authentication, dependency updates, and safe error handling can reduce vulnerabilities.
+
+SQL injection is an example of an attack that can occur when applications construct database queries unsafely. Parameterized queries help separate data from SQL instructions.
+
+## Incident Response
+
+Security incidents require preparation as well as technical controls. Organizations may maintain monitoring systems, alerting processes, backups, and incident-response plans.
+
+After an incident, teams investigate what happened, contain the problem, recover affected systems, and identify improvements. Regular security testing and employee awareness training can reduce future risk.

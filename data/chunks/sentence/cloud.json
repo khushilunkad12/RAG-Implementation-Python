@@ -1,0 +1,38 @@
+[
+  {
+    "chunk_id": "cloud.txt_0",
+    "source": "cloud.txt",
+    "chunk_index": 0,
+    "text": "# Cloud Computing Cloud computing provides computing resources through network-based services rather than requiring organizations to own and maintain all physical infrastructure themselves. Resources can include virtual machines, storage, databases, networking, and application platforms. ## Service Models Infrastructure as a Service provides fundamental computing resources such as virtual machines and storage."
+  },
+  {
+    "chunk_id": "cloud.txt_1",
+    "source": "cloud.txt",
+    "chunk_index": 1,
+    "text": "Platform as a Service provides a managed environment where developers can deploy applications without managing every underlying component. Software as a Service delivers complete applications to users through a network. The choice of service model affects how much infrastructure the customer manages. Managed services can reduce operational work, while lower-level services provide greater control. ## Scalability"
+  },
+  {
+    "chunk_id": "cloud.txt_2",
+    "source": "cloud.txt",
+    "chunk_index": 2,
+    "text": "One major advantage of cloud platforms is the ability to adjust resources according to demand. Horizontal scaling adds more instances, while vertical scaling increases the resources available to an existing instance. Autoscaling systems can respond to workload changes. During high traffic, additional capacity can be created. When demand falls, unused resources can be removed to reduce cost. ## Storage and Databases"
+  },
+  {
+    "chunk_id": "cloud.txt_3",
+    "source": "cloud.txt",
+    "chunk_index": 3,
+    "text": "Cloud providers offer object storage, block storage, file storage, and managed databases. Object storage is often used for documents, images, backups, and other large collections of files. Managed databases reduce the operational burden of backups, patching, monitoring, and maintenance. However, application developers still need to understand data models, query performance, security, and availability requirements. ## Security"
+  },
+  {
+    "chunk_id": "cloud.txt_4",
+    "source": "cloud.txt",
+    "chunk_index": 4,
+    "text": "Cloud security involves identity management, access policies, encryption, network controls, monitoring, and secure configuration. Misconfigured permissions can expose data even when the underlying infrastructure is secure. Organizations often use least-privilege access, multi-factor authentication, logging, and regular security reviews. ## Costs Cloud pricing can depend on compute usage, storage, network traffic, and managed services. Poorly controlled resources can lead to unexpected bills."
+  },
+  {
+    "chunk_id": "cloud.txt_5",
+    "source": "cloud.txt",
+    "chunk_index": 5,
+    "text": "Cost monitoring and resource tagging can help organizations understand spending. Cloud computing is therefore not simply about moving applications to remote servers. Successful adoption requires planning for architecture, security, performance, reliability, and cost."
+  }
+]
