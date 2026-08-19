@@ -48,6 +48,7 @@ python embed_store.py
 python retriever.py
 python rag_answer.py
 streamlit run app.py
+python retrieval/compare_chunking.py
 ```
 
 ---

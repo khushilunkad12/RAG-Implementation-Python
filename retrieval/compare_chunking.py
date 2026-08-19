@@ -1,5 +1,6 @@
 import os
 import json
+import csv
 import numpy as np
 
 from sentence_transformers import SentenceTransformer
@@ -9,20 +10,35 @@ from sentence_transformers import SentenceTransformer
 # Paths
 # ==========================================
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))
+)
 
 CHUNK_DIRS = {
-    "Fixed": os.path.join(BASE_DIR, "data", "chunks", "fixed"),
-    "Recursive": os.path.join(BASE_DIR, "data", "chunks", "recursive"),
-    "Sentence": os.path.join(BASE_DIR, "data", "chunks", "sentence"),
+    "Fixed": os.path.join(
+        BASE_DIR, "data", "chunks", "fixed"
+    ),
+    "Recursive": os.path.join(
+        BASE_DIR, "data", "chunks", "recursive"
+    ),
+    "Sentence": os.path.join(
+        BASE_DIR, "data", "chunks", "sentence"
+    ),
 }
+
+OUTPUT_FILE = os.path.join(
+    BASE_DIR,
+    "chunking_comparison_results.csv"
+)
 
 
 # ==========================================
 # Embedding Model
 # ==========================================
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+model = SentenceTransformer(
+    "all-MiniLM-L6-v2"
+)
 
 
 # ==========================================
@@ -47,7 +63,11 @@ def load_chunks(folder):
     chunks = []
 
     if not os.path.exists(folder):
-        print(f"Folder not found: {folder}")
+
+        print(
+            f"Folder not found: {folder}"
+        )
+
         return chunks
 
     for filename in os.listdir(folder):
@@ -55,41 +75,60 @@ def load_chunks(folder):
         if not filename.endswith(".json"):
             continue
 
-        filepath = os.path.join(folder, filename)
+        filepath = os.path.join(
+            folder,
+            filename
+        )
 
-        with open(filepath, "r", encoding="utf-8") as f:
+        with open(
+            filepath,
+            "r",
+            encoding="utf-8"
+        ) as f:
+
             data = json.load(f)
 
-        # Support either a list of chunks
-        # or {"chunks": [...]}
         if isinstance(data, list):
+
             file_chunks = data
 
         elif isinstance(data, dict):
-            file_chunks = data.get("chunks", [])
+
+            file_chunks = data.get(
+                "chunks",
+                []
+            )
 
         else:
+
             file_chunks = []
 
         for chunk in file_chunks:
 
             if isinstance(chunk, str):
+
                 chunks.append({
                     "text": chunk,
-                    "source": filename
+                    "source": filename,
+                    "chunk_id": "N/A"
                 })
 
             elif isinstance(chunk, dict):
 
                 chunks.append({
                     "text": chunk.get(
-    "text",
-    chunk.get("chunk_text", "")
-),
+                        "text",
+                        chunk.get(
+                            "chunk_text",
+                            ""
+                        )
+                    ),
+
                     "source": chunk.get(
                         "source",
                         filename
                     ),
+
                     "chunk_id": chunk.get(
                         "chunk_id",
                         "N/A"
@@ -100,39 +139,31 @@ def load_chunks(folder):
 
 
 # ==========================================
-# Cosine Similarity
-# ==========================================
-
-def cosine_similarity(a, b):
-
-    denominator = (
-        np.linalg.norm(a) *
-        np.linalg.norm(b)
-    )
-
-    if denominator == 0:
-        return 0
-
-    return np.dot(a, b) / denominator
-
-
-# ==========================================
 # Retrieve Top K
 # ==========================================
 
-def retrieve_top_k(chunks, question, k=3):
+def retrieve_top_k(
+    chunks,
+    question,
+    k=3
+):
 
     if not chunks:
         return []
 
-    texts = [
-        chunk["text"]
+    valid_chunks = [
+        chunk
         for chunk in chunks
         if chunk["text"].strip()
     ]
 
-    if not texts:
+    if not valid_chunks:
         return []
+
+    texts = [
+        chunk["text"]
+        for chunk in valid_chunks
+    ]
 
     # Embed chunks
     chunk_embeddings = model.encode(
@@ -146,6 +177,7 @@ def retrieve_top_k(chunks, question, k=3):
         normalize_embeddings=True
     )
 
+    # Cosine similarity
     scores = np.dot(
         chunk_embeddings,
         question_embedding
@@ -157,22 +189,22 @@ def retrieve_top_k(chunks, question, k=3):
 
     results = []
 
-    valid_chunks = [
-        chunk for chunk in chunks
-        if chunk["text"].strip()
-    ]
-
     for index in ranked_indices:
 
         chunk = valid_chunks[index]
 
         results.append({
-            "score": float(scores[index]),
+            "score": float(
+                scores[index]
+            ),
+
             "text": chunk["text"],
+
             "source": chunk.get(
                 "source",
                 "N/A"
             ),
+
             "chunk_id": chunk.get(
                 "chunk_id",
                 "N/A"
@@ -189,18 +221,22 @@ def retrieve_top_k(chunks, question, k=3):
 def main():
 
     print("=" * 70)
-    print("CHUNKING RETRIEVAL COMPARISON")
+    print(
+        "CHUNKING RETRIEVAL COMPARISON"
+    )
     print("=" * 70)
 
     all_chunks = {}
 
     # --------------------------------------
-    # Load all three strategies
+    # Load all strategies
     # --------------------------------------
 
     for strategy, folder in CHUNK_DIRS.items():
 
-        print(f"\nLoading {strategy} chunks...")
+        print(
+            f"\nLoading {strategy} chunks..."
+        )
 
         chunks = load_chunks(folder)
 
@@ -210,6 +246,12 @@ def main():
             f"{strategy}: "
             f"{len(chunks)} chunks loaded"
         )
+
+    # --------------------------------------
+    # CSV rows
+    # --------------------------------------
+
+    csv_rows = []
 
     # --------------------------------------
     # Run questions
@@ -222,15 +264,19 @@ def main():
 
         print("\n")
         print("=" * 70)
+
         print(
             f"QUESTION {question_number}: "
             f"{question}"
         )
+
         print("=" * 70)
 
         for strategy, chunks in all_chunks.items():
 
-            print(f"\n--- {strategy} ---")
+            print(
+                f"\n--- {strategy} ---"
+            )
 
             results = retrieve_top_k(
                 chunks,
@@ -239,7 +285,11 @@ def main():
             )
 
             if not results:
-                print("No chunks found.")
+
+                print(
+                    "No chunks found."
+                )
+
                 continue
 
             for rank, result in enumerate(
@@ -247,9 +297,35 @@ def main():
                 start=1
             ):
 
+                text_preview = (
+                    result["text"]
+                    .replace("\n", " ")
+                    .strip()
+                )
+
+                # Keep CSV preview short
+                text_preview = (
+                    text_preview[:300]
+                )
+
+                csv_rows.append({
+                    "question": question,
+                    "strategy": strategy,
+                    "rank": rank,
+                    "score": round(
+                        result["score"],
+                        4
+                    ),
+                    "source": result["source"],
+                    "chunk_id": result["chunk_id"],
+                    "text_preview": text_preview
+                })
+
+                # Console output
                 print(
                     f"\n{rank}. "
-                    f"Score: {result['score']:.4f}"
+                    f"Score: "
+                    f"{result['score']:.4f}"
                 )
 
                 print(
@@ -264,12 +340,56 @@ def main():
 
                 print(
                     f"Text: "
-                    f"{result['text'][:400]}"
+                    f"{text_preview}"
                 )
+
+    # ======================================
+    # Save CSV
+    # ======================================
+
+    with open(
+        OUTPUT_FILE,
+        "w",
+        newline="",
+        encoding="utf-8"
+    ) as file:
+
+        writer = csv.DictWriter(
+            file,
+            fieldnames=[
+                "question",
+                "strategy",
+                "rank",
+                "score",
+                "source",
+                "chunk_id",
+                "text_preview"
+            ]
+        )
+
+        writer.writeheader()
+
+        writer.writerows(
+            csv_rows
+        )
 
     print("\n")
     print("=" * 70)
-    print("COMPARISON COMPLETED")
+
+    print(
+        "COMPARISON COMPLETED"
+    )
+
+    print(
+        f"Results saved to: "
+        f"{OUTPUT_FILE}"
+    )
+
+    print(
+        f"Total rows: "
+        f"{len(csv_rows)}"
+    )
+
     print("=" * 70)
 
 
