@@ -49,6 +49,8 @@ python retriever.py
 python rag_answer.py
 streamlit run app.py
 python retrieval/compare_chunking.py
+- results are saved in chunking_comparison_results.csv
+- summary is available in chunking_comparison_summary.md
 ```
 
 ---
