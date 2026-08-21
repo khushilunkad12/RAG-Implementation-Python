@@ -1,5 +1,12 @@
-venv/
+﻿venv/
 venv_old/
+
 __pycache__/
 *.pyc
+
 .env
+
+chroma_db/
+output_chunks.json
+*.sqlite3
+*.csv

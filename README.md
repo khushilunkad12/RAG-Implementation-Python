@@ -3,7 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
 ![ChromaDB](https://img.shields.io/badge/Vector%20DB-ChromaDB-green)
 ![Sentence Transformers](https://img.shields.io/badge/Embeddings-all--MiniLM--L6--v2-orange)
-![Gemini](https://img.shields.io/badge/LLM-Gemini%202.5%20Flash-red)
+![Groq](https://img.shields.io/badge/LLM-Llama%203.3%2070B-red)
 ![Status](https://img.shields.io/badge/Status-Portfolio%20Project-success)
 
 ---
@@ -12,7 +12,7 @@
 
 This project demonstrates an end-to-end **Retrieval-Augmented Generation (RAG)** pipeline built using Python.
 
-The application loads `.txt` and `.pdf` documents, splits them into overlapping chunks, generates vector embeddings using Sentence Transformers, stores them in ChromaDB, retrieves the most relevant chunks using semantic search, and generates context-aware answers using Google's Gemini API.
+The application loads `.txt` and `.pdf` documents, splits them into overlapping chunks, generates vector embeddings using Sentence Transformers, stores them in ChromaDB, retrieves the most relevant chunks using semantic search, and generates context-aware answers using Groq API.
 
 The project is designed as a modular Retrieval-Augmented Generation application that demonstrates document ingestion, semantic retrieval, and grounded answer generation through both a command-line interface and a Streamlit web application.
 
@@ -28,7 +28,7 @@ The project is designed as a modular Retrieval-Augmented Generation application 
 * Persistent vector storage using ChromaDB.
 * Semantic similarity search.
 * Retrieval of Top-K relevant chunks.
-* Context-aware answer generation using Gemini 2.5 Flash.
+* Context-aware answer generation using Llama 3.3 70B.
 * Source citations for every generated answer.
 * Streamlit web interface.
 * Modular project architecture.
@@ -96,12 +96,12 @@ python retrieval/compare_chunking.py
 #### Test 4 – Question Answering
 
 **Expected Result:**
-Gemini generates an answer from retrieved context.
+Groq generates an answer from retrieved context.
 
 **Status:** ⏳ Pending Retest
 
 Reason:
-Gemini API quota was exceeded during testing. Retrieval pipeline was verified successfully.
+Groq API quota was exceeded during testing. Retrieval pipeline was verified successfully.
 
 ---
 
@@ -119,7 +119,7 @@ Gemini API quota was exceeded during testing. Retrieval pipeline was verified su
 
 ### Notes
 
-When Gemini API is unavailable, the application:
+When Groq API is unavailable, the application:
 
 - Shows an informative error message.
 - Displays retrieved sources.
@@ -130,7 +130,7 @@ When Gemini API is unavailable, the application:
 * Python 3.12
 * Sentence Transformers
 * ChromaDB
-* Google Gemini 2.5 Flash
+* Groq (Llama 3.3 70B)
 * Streamlit
 * PyPDF
 * python-dotenv
@@ -175,7 +175,7 @@ RAG-Implementation-Python/
 | `main.py`            | Runs the document loading and chunking pipeline.                 |
 | `embed_store.py`     | Generates embeddings and stores them in ChromaDB.                |
 | `retriever.py`       | Retrieves the most relevant chunks using semantic search.        |
-| `rag_answer.py`      | Generates grounded answers using Gemini.                         |
+| `rag_answer.py`      | Generates grounded answers using Groq.                         |
 | `app.py`             | Streamlit web interface.                                         |
 | `test_loader.py`     | Basic automated tests.                                           |
 | `documents/`         | Source documents.                                                |
@@ -205,7 +205,7 @@ ChromaDB Vector Store
 Semantic Retrieval
         │
         ▼
-Gemini 2.5 Flash
+Llama 3.3 70B
         │
         ▼
 Final Answer + Source Citations
@@ -263,7 +263,7 @@ pip install -r requirements.txt
 Create a `.env` file in the project root.
 
 ```env
-GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+Groq_API_KEY=YOUR_Groq_API_KEY
 ```
 
 ---
@@ -329,7 +329,7 @@ Pipeline:
 * User enters a question
 * Relevant chunks are retrieved
 * Retrieved chunks become context
-* Gemini generates a grounded answer
+* Groq generates a grounded answer
 * Sources are displayed
 
 ---
@@ -447,7 +447,7 @@ Through this project I gained practical experience with:
 * ChromaDB vector databases
 * Semantic similarity search
 * Prompt engineering
-* Google Gemini API integration
+* Groq API integration
 * Streamlit application development
 * Modular Python project architecture
 * Basic software testing
@@ -457,7 +457,7 @@ Through this project I gained practical experience with:
 # Requirements
 
 * Python 3.12
-* Internet connection (required for Gemini API)
+* Internet connection (required for Groq API)
 
 > **Note:** The first execution may take a few minutes because the Sentence Transformer model is downloaded automatically.
 
@@ -482,3 +482,4 @@ Through this project I gained practical experience with:
 **Khushi Lukkad**
 
 GitHub: https://github.com/khushilunkad12
+
