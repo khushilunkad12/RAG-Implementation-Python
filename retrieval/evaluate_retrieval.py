@@ -11,27 +11,27 @@ BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))
 )
 
-INPUT_FILE = os.path.join(
-    BASE_DIR,
-    "chunking_comparison_results.csv"
-)
-
-OUTPUT_FILE = os.path.join(
+EVALUATION_FILE = os.path.join(
     BASE_DIR,
     "retrieval_evaluation.csv"
 )
 
+SUMMARY_FILE = os.path.join(
+    BASE_DIR,
+    "retrieval_metrics_summary.csv"
+)
+
 
 # ==========================================
-# Load Comparison Results
+# Load Evaluation Results
 # ==========================================
 
-def load_results():
+def load_evaluation():
 
     rows = []
 
     with open(
-        INPUT_FILE,
+        EVALUATION_FILE,
         "r",
         encoding="utf-8"
     ) as file:
@@ -45,7 +45,7 @@ def load_results():
 
 
 # ==========================================
-# Calculate Precision@3
+# Precision@3
 # ==========================================
 
 def precision_at_3(relevance_labels):
@@ -53,13 +53,11 @@ def precision_at_3(relevance_labels):
     if not relevance_labels:
         return 0.0
 
-    relevant = sum(relevance_labels)
-
-    return relevant / len(relevance_labels)
+    return sum(relevance_labels) / len(relevance_labels)
 
 
 # ==========================================
-# Calculate MRR
+# MRR
 # ==========================================
 
 def calculate_mrr(relevance_labels):
@@ -76,16 +74,33 @@ def calculate_mrr(relevance_labels):
 
 
 # ==========================================
-# Main Evaluation
+# Best Rank
+# ==========================================
+
+def calculate_best_rank(relevance_labels):
+
+    for rank, label in enumerate(
+        relevance_labels,
+        start=1
+    ):
+
+        if label == 1:
+            return rank
+
+    return 0
+
+
+# ==========================================
+# Evaluate
 # ==========================================
 
 def main():
 
     print("=" * 70)
-    print("RETRIEVAL QUALITY EVALUATION")
+    print("RETRIEVAL METRICS EVALUATION")
     print("=" * 70)
 
-    rows = load_results()
+    rows = load_evaluation()
 
     grouped = defaultdict(list)
 
@@ -99,77 +114,22 @@ def main():
 
         grouped[key].append(row)
 
-    evaluation_rows = []
+    summary_rows = []
 
     # ======================================
-    # Manual Relevance Evaluation
+    # Calculate Metrics
     # ======================================
 
     for (question, strategy), results in grouped.items():
 
-        # Sort by rank
         results.sort(
             key=lambda x: int(x["rank"])
         )
 
-        print("\n")
-        print("=" * 70)
-        print(f"QUESTION: {question}")
-        print(f"STRATEGY: {strategy}")
-        print("=" * 70)
-
-        relevance_labels = []
-
-        for result in results:
-
-            rank = int(result["rank"])
-
-            print("\n")
-            print(f"Rank: {rank}")
-            print(f"Score: {result['score']}")
-            print(f"Source: {result['source']}")
-            print(f"Chunk ID: {result['chunk_id']}")
-
-            print("\nText:")
-            print(result["text_preview"])
-
-            print("\nIs this chunk relevant?")
-            print("Enter 1 = Relevant")
-            print("Enter 0 = Not relevant")
-
-            while True:
-
-                label = input(
-                    "Relevance (0/1): "
-                ).strip()
-
-                if label in ["0", "1"]:
-                    break
-
-                print(
-                    "Please enter only 0 or 1."
-                )
-
-            relevance = int(label)
-
-            relevance_labels.append(
-                relevance
-            )
-
-            evaluation_rows.append({
-                "question": question,
-                "strategy": strategy,
-                "rank": rank,
-                "score": result["score"],
-                "source": result["source"],
-                "chunk_id": result["chunk_id"],
-                "relevance": relevance,
-                "text_preview": result["text_preview"]
-            })
-
-        # ==================================
-        # Metrics
-        # ==================================
+        relevance_labels = [
+            int(row["relevance"])
+            for row in results
+        ]
 
         precision = precision_at_3(
             relevance_labels
@@ -179,37 +139,64 @@ def main():
             relevance_labels
         )
 
+        best_rank = calculate_best_rank(
+            relevance_labels
+        )
+
+        relevant_chunks_found = sum(
+            relevance_labels
+        )
+
+        summary_rows.append({
+            "strategy": strategy,
+            "question": question,
+            "precision_at_3": f"{precision:.4f}",
+            "mrr": f"{mrr:.4f}",
+            "best_rank": best_rank,
+            "relevant_chunks_found": relevant_chunks_found
+        })
+
         print("\n")
-        print("--- Metrics ---")
+        print("-" * 70)
+        print(f"Question : {question}")
+        print(f"Strategy : {strategy}")
+        print("-" * 70)
 
         print(
-            f"Precision@3: {precision:.2f}"
+            f"Precision@3         : {precision:.4f}"
         )
 
         print(
-            f"MRR: {mrr:.2f}"
+            f"MRR                  : {mrr:.4f}"
+        )
+
+        print(
+            f"Best Rank            : {best_rank}"
+        )
+
+        print(
+            f"Relevant Chunks Found: "
+            f"{relevant_chunks_found}"
         )
 
     # ======================================
-    # Save Evaluation Results
+    # Save Summary CSV
     # ======================================
 
     with open(
-        OUTPUT_FILE,
+        SUMMARY_FILE,
         "w",
         newline="",
         encoding="utf-8"
     ) as file:
 
         fieldnames = [
-            "question",
             "strategy",
-            "rank",
-            "score",
-            "source",
-            "chunk_id",
-            "relevance",
-            "text_preview"
+            "question",
+            "precision_at_3",
+            "mrr",
+            "best_rank",
+            "relevant_chunks_found"
         ]
 
         writer = csv.DictWriter(
@@ -220,8 +207,130 @@ def main():
         writer.writeheader()
 
         writer.writerows(
-            evaluation_rows
+            summary_rows
         )
+
+    # ======================================
+    # Strategy Averages
+    # ======================================
+
+    strategy_metrics = defaultdict(
+        lambda: {
+            "precision": [],
+            "mrr": [],
+            "best_rank": []
+        }
+    )
+
+    for row in summary_rows:
+
+        strategy = row["strategy"]
+
+        strategy_metrics[strategy][
+            "precision"
+        ].append(
+            float(row["precision_at_3"])
+        )
+
+        strategy_metrics[strategy][
+            "mrr"
+        ].append(
+            float(row["mrr"])
+        )
+
+        strategy_metrics[strategy][
+            "best_rank"
+        ].append(
+            int(row["best_rank"])
+        )
+
+    # ======================================
+    # Print Strategy Averages
+    # ======================================
+
+    print("\n")
+    print("=" * 70)
+    print("STRATEGY AVERAGES")
+    print("=" * 70)
+
+    strategy_averages = {}
+
+    for strategy, metrics in strategy_metrics.items():
+
+        avg_precision = (
+            sum(metrics["precision"])
+            / len(metrics["precision"])
+        )
+
+        avg_mrr = (
+            sum(metrics["mrr"])
+            / len(metrics["mrr"])
+        )
+
+        avg_best_rank = (
+            sum(metrics["best_rank"])
+            / len(metrics["best_rank"])
+        )
+
+        strategy_averages[strategy] = {
+            "precision": avg_precision,
+            "mrr": avg_mrr,
+            "best_rank": avg_best_rank
+        }
+
+        print(
+            f"\n{strategy}"
+        )
+
+        print(
+            f"  Average Precision@3: "
+            f"{avg_precision:.4f}"
+        )
+
+        print(
+            f"  Average MRR: "
+            f"{avg_mrr:.4f}"
+        )
+
+        print(
+            f"  Average Best Rank: "
+            f"{avg_best_rank:.4f}"
+        )
+
+    # ======================================
+    # Find Best Strategy
+    # ======================================
+
+    if strategy_averages:
+
+        best_strategy = max(
+            strategy_averages,
+            key=lambda strategy:
+                strategy_averages[strategy]["mrr"]
+        )
+
+        print("\n")
+        print("=" * 70)
+        print("BEST CHUNKING STRATEGY")
+        print("=" * 70)
+
+        print(
+            f"Best strategy: {best_strategy}"
+        )
+
+        print(
+            f"Average Precision@3: "
+            f"{strategy_averages[best_strategy]['precision']:.4f}"
+        )
+
+        print(
+            f"Average MRR: "
+            f"{strategy_averages[best_strategy]['mrr']:.4f}"
+        )
+
+    # ======================================
+    # Completed
+    # ======================================
 
     print("\n")
     print("=" * 70)
@@ -229,12 +338,8 @@ def main():
     print("=" * 70)
 
     print(
-        f"Saved to: {OUTPUT_FILE}"
-    )
-
-    print(
-        f"Total evaluated chunks: "
-        f"{len(evaluation_rows)}"
+        f"Saved metrics summary to:\n"
+        f"{SUMMARY_FILE}"
     )
 
 
