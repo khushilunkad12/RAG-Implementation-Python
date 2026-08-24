@@ -216,7 +216,7 @@ else:
                     "⚠️ The uploaded documents do not contain enough information to answer this question."
                 )
 
-            elif answer.strip() == "LLM/API unavailable. Retrieved context is shown below.":
+            elif answer.strip() == "LLM/API unavailable.":
 
                 st.error("⚠️ Groq service is currently unavailable.")
 
