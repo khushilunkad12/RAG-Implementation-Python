@@ -202,7 +202,7 @@ else:
 
             with st.spinner("Retrieving answer..."):
 
-            answer, sources, chunks, distances, rewritten_query = generate_answer(question)
+              answer, sources, chunks, distances, rewritten_query = generate_answer(question)
 
             st.success("Answer generated!")
 
@@ -218,7 +218,7 @@ else:
 
             elif answer.strip() == "LLM/API unavailable. Retrieved context is shown below.":
 
-                st.error("⚠️ Gemini service is currently unavailable.")
+                st.error("⚠️ Groq service is currently unavailable.")
 
                 st.info(
                     """

@@ -2,14 +2,12 @@ import chromadb
 from sentence_transformers import SentenceTransformer, CrossEncoder
 
 # ==========================================
-# 1. Load Embedding Model
-# ==========================================
-
-# ==========================================
-# Embedding Model (Lazy Loading)
+# 1. Models (Lazy Loading)
 # ==========================================
 
 _model = None
+_reranker = None
+
 
 def get_model():
     """
@@ -29,8 +27,6 @@ def get_model():
     return _model
 
 
-_reranker = None
-
 def get_reranker():
     """
     Loads the CrossEncoder reranker only once.
@@ -47,31 +43,10 @@ def get_reranker():
         print("Reranker loaded.")
 
     return _reranker
-    """
-    Loads the embedding model only once.
-    """
-
-    global _model
-
-    if _model is None:
-
-        print("Loading embedding model...")
-
-        _model = SentenceTransformer(
-            "all-MiniLM-L6-v2"
-        )
-
-        print("Embedding model loaded.")
-
-    return _model
 
 
 # ==========================================
 # 2. Connect to ChromaDB
-# ==========================================
-
-# ==========================================
-# ChromaDB (Lazy Loading)
 # ==========================================
 
 collection = None
@@ -81,17 +56,14 @@ def get_collection():
     """
     Connects to ChromaDB only once.
     """
-
     global collection
 
     if collection is None:
-
         client = chromadb.PersistentClient(
             path="chroma_db"
         )
 
         try:
-
             collection = client.get_collection(
                 name="rag_documents"
             )
@@ -99,12 +71,11 @@ def get_collection():
             print("Connected to ChromaDB.")
 
         except Exception as e:
-
-           raise RuntimeError(
-        "Chroma collection not found. "
-        "Run 'python main.py' followed by "
-        "'python embed_store.py' first."
-    ) from e
+            raise RuntimeError(
+                "Chroma collection not found. "
+                "Run 'python main.py' followed by "
+                "'python embed_store.py' first."
+            ) from e
 
     return collection
 
@@ -114,7 +85,8 @@ def get_collection():
 # ==========================================
 
 def retrieve_chunks(query, top_k=15, top_n=5):
-    # Stage 1: embedding retrieval
+
+    # Stage 1: Embedding retrieval
     model = get_model()
 
     query_embedding = model.encode(query).tolist()
@@ -131,7 +103,7 @@ def retrieve_chunks(query, top_k=15, top_n=5):
     metadatas = results["metadatas"][0]
     distances = results["distances"][0]
 
-    # Stage 2: reranking
+    # Stage 2: Reranking
     reranker = get_reranker()
 
     pairs = [(query, doc) for doc in documents]
@@ -157,6 +129,7 @@ def retrieve_chunks(query, top_k=15, top_n=5):
     distances = [r[4] for r in ranked]
 
     return ids, documents, metadatas, distances
+
 
 # ==========================================
 # 4. Main Function
