@@ -18,8 +18,9 @@ questions = [
 for question in questions:
     print("\nQuestion:", question)
 
-    answer, metadata, documents, distances = generate_answer(question)
+    answer, metadata, documents, distances, rewritten_query = generate_answer(question)
 
+    print("Rewritten Query:", rewritten_query)
     print("Answer:", answer)
 
     if answer.strip() == "Not enough information in the uploaded documents.":
