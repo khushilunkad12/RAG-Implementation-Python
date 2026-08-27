@@ -96,13 +96,15 @@ python retrieval/compare_chunking.py
 #### Test 4 – Question Answering
 
 **Expected Result:**
-Groq generates an answer from retrieved context.
+Groq generates a grounded answer from the retrieved context.
 
-**Status:** ⏳ Pending Retest
+**Status:** ✅ Pass
 
-Reason:
-Groq API quota was exceeded during testing. Retrieval pipeline was verified successfully.
-
+Verified:
+- Answer generation from retrieved context.
+- Answers remain grounded in uploaded documents.
+- Unsupported questions trigger the guardrail.
+- Retrieved sources remain available when LLM/API generation is unavailable.
 ---
 
 #### Test 5 – Reset Session
