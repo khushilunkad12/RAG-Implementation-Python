@@ -8,7 +8,7 @@ from sentence_transformers import SentenceTransformer
 # Store Embeddings
 # ==========================================
 
-def store_embeddings():
+def store_embeddings(model=None):
     """
     Reads output_chunks.json,
     generates embeddings,
@@ -41,13 +41,13 @@ def store_embeddings():
 
     print("Loading embedding model...")
 
-    model = SentenceTransformer(
-        "all-MiniLM-L6-v2"
-    )
+    if model is None:
+
+        model = SentenceTransformer("all-MiniLM-L6-v2")
 
     print("Embedding model loaded.")
 
-       # ----------------------------
+    # ----------------------------
     # Connect to ChromaDB
     # ----------------------------
 
@@ -70,29 +70,38 @@ def store_embeddings():
     print("Connected to ChromaDB.")
 
     # ----------------------------
+    # Generate embeddings in batch
+    # ----------------------------
+
+    texts = [chunk["text"] for chunk in chunks]
+
+    embeddings = model.encode(
+        texts,
+        batch_size=32,
+        show_progress_bar=True
+    ).tolist()
+
+    # ----------------------------
     # Store embeddings
     # ----------------------------
 
-    for chunk in chunks:
-
-        embedding = model.encode(
-            chunk["text"]
-        ).tolist()
-
-        collection.upsert(
-            ids=[chunk["chunk_id"]],
-            documents=[chunk["text"]],
-            embeddings=[embedding],
-            metadatas=[chunk["metadata"]]
-        )
+    collection.upsert(
+        ids=[chunk["chunk_id"] for chunk in chunks],
+        documents=texts,
+        embeddings=embeddings,
+        metadatas=[chunk["metadata"] for chunk in chunks]
+    )
 
     print("Embeddings stored successfully.")
+
+
 # ==========================================
 # Main Function
 # ==========================================
 
 def main():
-    store_embeddings()
+
+    store_embeddings(model=None)
 
 
 # ==========================================
@@ -100,5 +109,4 @@ def main():
 # ==========================================
 
 if __name__ == "__main__":
-    
     main()

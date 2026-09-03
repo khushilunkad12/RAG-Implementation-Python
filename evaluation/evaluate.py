@@ -65,7 +65,7 @@ for sample in evaluation_dataset:
     print("✓ Completed")
 
     # Prevent Gemini rate limit
-    time.sleep(5)
+    time.sleep(10)
 
 print("\nEvaluation Dataset Created!")
 
