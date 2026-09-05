@@ -16,7 +16,10 @@ COLLECTION_NAME = "rag_documents"
 # ==========================================
 # Cached Embedding Model
 # ==================== ======================
-
+@st.cache_resource
+def get_embedding_model():
+    from sentence_transformers import SentenceTransformer
+    return SentenceTransformer("all-MiniLM-L6-v2")
 
 
 
@@ -139,7 +142,7 @@ if uploaded_files:
 
             st.write("Starting embedding storage...")
 
-            store_embeddings()
+            store_embeddings(model=get_embedding_model())
 
             st.write("Embedding storage completed.")
 

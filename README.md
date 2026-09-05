@@ -320,6 +320,15 @@ GROQ_API_KEY=YOUR_GROQ_API_KEY_HERE
 
 ---
 
+# Quick Start
+
+After installing the dependencies and configuring the `.env` file, run:
+
+```bash
+pip install -r requirements.txt
+python main.py
+streamlit run app.py
+
 # Project Workflow
 
 ## Step 1 — Load and Chunk Documents

@@ -5,6 +5,16 @@ from retriever import retrieve_chunks
 
 load_dotenv()
 
+def get_groq_api_key():
+    api_key = os.getenv("GROQ_API_KEY")
+
+    if not api_key:
+        raise RuntimeError(
+            "GROQ_API_KEY is missing. "
+            "Please add your Groq API key to the .env file."
+        )
+
+    return api_key
 
 # ==========================================
 # 1. Decide Whether History Is Needed
@@ -151,7 +161,7 @@ Return ONLY the rewritten search query.
         llm = ChatGroq(
             model="openai/gpt-oss-120b",
             temperature=0,
-            api_key=os.getenv("GROQ_API_KEY"),
+            api_key=get_groq_api_key(),
         )
 
         rewritten_query = llm.invoke(prompt).content.strip()
@@ -234,7 +244,7 @@ Question:
         llm = ChatGroq(
             model="openai/gpt-oss-120b",
             temperature=0,
-            api_key=os.getenv("GROQ_API_KEY"),
+            api_key=get_groq_api_key(),
         )
 
         answer = llm.invoke(prompt).content

@@ -10,7 +10,11 @@ The system combines document chunking, embeddings, ChromaDB vector search, query
 
 The complete RAG pipeline follows:
 
-**Document Upload → Chunking → Embeddings → ChromaDB → Query Rewriting → Retrieval → Cross-Encoder Reranking → Answer Generation → Guardrail → Evaluation**
+**Document Upload → Chunking → Embeddings → ChromaDB
+                                      ↓
+User Query → Query Rewriting → Retrieval → Cross-Encoder Reranking → Answer Generation → Guardrail
+                                      ↓
+                              Evaluation / Validation**
 
 ### 2.1 Document Upload
 
