@@ -1,9 +1,9 @@
-# RAG Implementation in Python
+﻿# RAG Implementation in Python
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
 ![ChromaDB](https://img.shields.io/badge/Vector%20DB-ChromaDB-green)
 ![Sentence Transformers](https://img.shields.io/badge/Embeddings-all--MiniLM--L6--v2-orange)
-![Groq](https://img.shields.io/badge/LLM-Llama%203.3%2070B-red)
+![Groq](https://img.shields.io/badge/LLM-GPT--OSS--120B-red)
 ![Status](https://img.shields.io/badge/Status-Portfolio%20Project-success)
 
 ---
@@ -12,35 +12,39 @@
 
 This project demonstrates an end-to-end **Retrieval-Augmented Generation (RAG)** pipeline built using Python.
 
-The application loads `.txt` and `.pdf` documents, splits them into overlapping chunks, generates vector embeddings using Sentence Transformers, stores them in ChromaDB, retrieves the most relevant chunks using semantic search, and generates context-aware answers using Groq API.
+The application loads `.txt` and `.pdf` documents, splits them into overlapping chunks, generates vector embeddings using Sentence Transformers, stores them in ChromaDB, retrieves relevant chunks using semantic search and cross-encoder reranking, and generates grounded answers using the Groq API.
 
-The project is designed as a modular Retrieval-Augmented Generation application that demonstrates document ingestion, semantic retrieval, and grounded answer generation through both a command-line interface and a Streamlit web application.
+The project is designed as a modular Retrieval-Augmented Generation application that demonstrates document ingestion, semantic retrieval, query rewriting, reranking, grounded answer generation, guardrails, evaluation, and a Streamlit web interface.
 
 ---
 
 # Features
 
-* Supports both `.txt` and `.pdf` documents.
+* Supports `.txt` and `.pdf` documents.
 * Automatic document loading.
 * Configurable chunk size and overlap.
 * Metadata generation for every chunk.
-* Sentence Transformer embeddings (`all-MiniLM-L6-v2`).
+* Sentence Transformer embeddings using `all-MiniLM-L6-v2`.
 * Persistent vector storage using ChromaDB.
 * Semantic similarity search.
-* Retrieval of Top-K relevant chunks.
-* Context-aware answer generation using Llama 3.3 70B.
-* Source citations for every generated answer.
+* Top-K retrieval.
+* Query rewriting for improved retrieval.
+* Cross-encoder reranking.
+* Context-aware answer generation using Groq (`GPT-OSS-120B`).
+* Source information including filename, page number, and chunk number.
+* Guardrail for unsupported questions.
+* Retrieval evaluation and chunking comparison.
+* Guardrail testing using assertions.
 * Streamlit web interface.
 * Modular project architecture.
-* Basic automated testing using assertions.
 
 ---
 
-## Testing
+# Testing
 
 The project was tested on Windows using Python 3.12.
 
-### Commands Executed
+## Commands Executed
 
 ```bash
 python main.py
@@ -49,90 +53,111 @@ python retriever.py
 python rag_answer.py
 streamlit run app.py
 python retrieval/compare_chunking.py
-- results are saved in chunking_comparison_results.csv
-- summary is available in chunking_comparison_summary.md
+python retrieval/evaluate_retrieval.py
+python evaluation/test_guardrail.py
+python evaluation/evaluate.py
 ```
+
+Evaluation outputs include:
+
+* `chunking_comparison_results.csv`
+* `chunking_comparison_summary.md`
+* `retrieval_evaluation.csv`
+* `retrieval_metrics_summary.csv`
+* `evaluation_results.csv`
 
 ---
 
-### Test Cases
+# Test Cases
 
-#### Test 1 – Upload Document
+## Test 1 – Upload Document
+
 **Input:** Python Notes PDF
 
 **Expected Result:**
-- Document uploads successfully.
-- Previous document is removed.
-- Current document is displayed.
+
+* Document uploads successfully.
+* Previous uploaded document is removed.
+* Current document is displayed.
 
 **Status:** ✅ Pass
 
 ---
 
-#### Test 2 – Document Processing
+## Test 2 – Document Processing
 
 **Expected Result:**
-- Pages extracted successfully.
-- Text chunked correctly.
-- Embeddings generated.
-- ChromaDB updated.
+
+* Pages extracted successfully.
+* Text chunked correctly.
+* Embeddings generated.
+* ChromaDB updated.
 
 **Status:** ✅ Pass
 
 ---
 
-#### Test 3 – Retrieval Pipeline
+## Test 3 – Retrieval Pipeline
 
 **Expected Result:**
-- Relevant chunks retrieved.
-- Source filename displayed.
-- Page number displayed.
-- Chunk number displayed.
+
+* Relevant chunks retrieved.
+* Source filename displayed.
+* Page number displayed.
+* Chunk number displayed.
+* Retrieved chunks are available for inspection.
 
 **Status:** ✅ Pass
 
 ---
 
-#### Test 4 – Question Answering
+## Test 4 – Question Answering
 
 **Expected Result:**
+
 Groq generates a grounded answer from the retrieved context.
 
 **Status:** ✅ Pass
 
 Verified:
-- Answer generation from retrieved context.
-- Answers remain grounded in uploaded documents.
-- Unsupported questions trigger the guardrail.
-- Retrieved sources remain available when LLM/API generation is unavailable.
+
+* Answer generation from retrieved context.
+* Answers remain grounded in uploaded documents.
+* Unsupported questions trigger the guardrail.
+* Retrieved sources remain available when LLM/API generation is unavailable.
+
 ---
 
-#### Test 5 – Reset Session
+## Test 5 – Reset Session
 
 **Expected Result:**
-- Documents removed.
-- Chroma collection cleared.
-- Current document reset.
-- User can upload a new document.
+
+* Documents removed.
+* ChromaDB collection cleared.
+* Current document state reset.
+* User can upload a new document.
 
 **Status:** ✅ Pass
 
 ---
 
-### Notes
+## Notes
 
-When Groq API is unavailable, the application:
+When the Groq API is unavailable, the application:
 
-- Shows an informative error message.
-- Displays retrieved sources.
-- Displays retrieved chunks.
-- Allows verification of the retrieval pipeline without LLM response.
+* Shows an informative error message.
+* Displays retrieved sources.
+* Displays retrieved chunks.
+* Allows verification of the retrieval pipeline without an LLM response.
+
+---
+
 # Tech Stack
 
 * Python 3.12
 * Sentence Transformers
 * ChromaDB
-* Groq (Llama 3.3 70B)
+* Groq (`GPT-OSS-120B`)
 * Streamlit
 * PyPDF
 * python-dotenv
@@ -145,9 +170,16 @@ When Groq API is unavailable, the application:
 RAG-Implementation-Python/
 
 │
-├── documents/
+├── retrieval/
+│   ├── compare_chunking.py
+│   ├── evaluate_retrieval.py
+│   └── relevance_dataset.csv
 │
-├── chroma_db/
+├── evaluation/
+│   ├── evaluate.py
+│   ├── sample_dataset.py
+│   ├── ragas_config.py
+│   └── test_guardrail.py
 │
 ├── document_loader.py
 ├── chunker.py
@@ -158,31 +190,38 @@ RAG-Implementation-Python/
 ├── app.py
 ├── test_loader.py
 │
-├── output_chunks.json
+├── chunking_comparison_results.csv
+├── chunking_comparison_summary.md
+├── retrieval_evaluation.csv
+├── retrieval_metrics_summary.csv
+├── evaluation_results.csv
 │
+├── output_chunks.json
 ├── requirements.txt
 ├── README.md
+├── FINAL_PROJECT_REPORT.md
 ├── .env.example
 └── .gitignore
 ```
+
+Generated runtime folders such as `documents/` and `chroma_db/` are used locally by the application and are not required to be committed as source files.
 
 ---
 
 # File Description
 
-| File                 | Description                                                      |
-| -------------------- | ---------------------------------------------------------------- |
-| `document_loader.py` | Loads `.txt` and `.pdf` documents.                               |
-| `chunker.py`         | Splits documents into overlapping chunks and generates metadata. |
-| `main.py`            | Runs the document loading and chunking pipeline.                 |
-| `embed_store.py`     | Generates embeddings and stores them in ChromaDB.                |
-| `retriever.py`       | Retrieves the most relevant chunks using semantic search.        |
-| `rag_answer.py`      | Generates grounded answers using Groq.                         |
-| `app.py`             | Streamlit web interface.                                         |
-| `test_loader.py`     | Basic automated tests.                                           |
-| `documents/`         | Source documents.                                                |
-| `chroma_db/`         | Persistent vector database.                                      |
-| `output_chunks.json` | Generated document chunks.                                       |
+| File                 | Description                                                        |
+| -------------------- | ------------------------------------------------------------------ |
+| `document_loader.py` | Loads `.txt` and `.pdf` documents.                                 |
+| `chunker.py`         | Splits documents into overlapping chunks and generates metadata.   |
+| `main.py`            | Runs document loading and chunking.                                |
+| `embed_store.py`     | Generates embeddings and stores them in ChromaDB.                  |
+| `retriever.py`       | Retrieves and reranks relevant chunks.                             |
+| `rag_answer.py`      | Handles query rewriting and grounded answer generation using Groq. |
+| `app.py`             | Streamlit web interface.                                           |
+| `test_loader.py`     | Basic document-loading tests.                                      |
+| `retrieval/`         | Retrieval and chunking evaluation scripts and relevance dataset.   |
+| `evaluation/`        | RAGAS and guardrail evaluation scripts.                            |
 
 ---
 
@@ -204,13 +243,22 @@ Embedding Generation
 ChromaDB Vector Store
         │
         ▼
+Query Rewriting
+        │
+        ▼
 Semantic Retrieval
         │
         ▼
-Llama 3.3 70B
+Cross-Encoder Reranking
         │
         ▼
-Final Answer + Source Citations
+Groq GPT-OSS-120B
+        │
+        ▼
+Guardrail
+        │
+        ▼
+Final Answer + Source Information
 ```
 
 ---
@@ -220,11 +268,11 @@ Final Answer + Source Citations
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/khushilunkad12/RAG-Implementation-Python.git
+git clone https://github.com/khushilunkad12/Phase2_Rag_Practice.git
 ```
 
 ```bash
-cd RAG-Implementation-Python
+cd Phase2_Rag_Practice
 ```
 
 ---
@@ -237,13 +285,13 @@ python -m venv venv
 
 ### Activate
 
-**Windows (Command Prompt)**
+**Windows Command Prompt**
 
 ```bash
 venv\Scripts\activate
 ```
 
-**Windows (PowerShell)**
+**Windows PowerShell**
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
@@ -268,10 +316,9 @@ Create a `.env` file in the project root.
 GROQ_API_KEY=YOUR_GROQ_API_KEY_HERE
 ```
 
+> The first installation may take several minutes because Sentence Transformers downloads the required embedding model and PyTorch dependencies.
+
 ---
-> Note:
-> The first installation may take several minutes because
-> sentence-transformers downloads the PyTorch model and embedding model.
 
 # Project Workflow
 
@@ -283,10 +330,11 @@ python main.py
 
 This step:
 
-* Loads all documents
-* Splits documents into chunks
-* Generates metadata
-* Saves chunks into `output_chunks.json`
+* Loads documents.
+* Extracts text.
+* Splits documents into chunks.
+* Generates metadata.
+* Saves chunks into `output_chunks.json`.
 
 ---
 
@@ -298,9 +346,9 @@ python embed_store.py
 
 This step:
 
-* Reads `output_chunks.json`
-* Generates embeddings using Sentence Transformers
-* Stores embeddings inside ChromaDB
+* Reads `output_chunks.json`.
+* Generates embeddings using `all-MiniLM-L6-v2`.
+* Stores embeddings and metadata inside ChromaDB.
 
 ---
 
@@ -310,13 +358,7 @@ This step:
 python retriever.py
 ```
 
-Example:
-
-```text
-What is RAG?
-```
-
-The program retrieves the Top-3 most relevant chunks.
+The retrieval pipeline performs semantic search and uses a cross-encoder to rerank the retrieved chunks.
 
 ---
 
@@ -328,11 +370,13 @@ python rag_answer.py
 
 Pipeline:
 
-* User enters a question
-* Relevant chunks are retrieved
-* Retrieved chunks become context
-* Groq generates a grounded answer
-* Sources are displayed
+* User enters a question.
+* Query may be rewritten for retrieval.
+* Relevant chunks are retrieved.
+* Retrieved chunks are reranked.
+* Retrieved context is passed to Groq.
+* Groq generates a grounded answer.
+* Source information is displayed.
 
 ---
 
@@ -348,8 +392,9 @@ Using the Streamlit application you can:
 * Process documents.
 * Ask questions.
 * View generated answers.
+* View retrieved sources.
 * View retrieved chunks.
-* View source citations.
+* Reset the current session.
 
 ---
 
@@ -362,13 +407,13 @@ Using the Streamlit application you can:
 
 # Embedding Model
 
-Sentence Transformer
+**Sentence Transformer**
 
 ```text
 all-MiniLM-L6-v2
 ```
 
-Embedding Dimension
+**Embedding Dimension**
 
 ```text
 384
@@ -378,22 +423,55 @@ Embedding Dimension
 
 # Vector Database
 
-Database
+**Database**
 
 ```text
 ChromaDB
 ```
 
-Persistent Storage
+**Persistent Storage**
 
 ```text
 chroma_db/
 ```
 
-Collection Name
+**Collection Name**
 
 ```text
 rag_documents
+```
+
+---
+
+# Evaluation
+
+The project includes retrieval and RAG evaluation components.
+
+### Retrieval Evaluation
+
+Retrieval quality is evaluated using:
+
+* Relevance labels.
+* Precision@3.
+* Mean Reciprocal Rank (MRR).
+* Best relevant chunk rank.
+* Relevant chunks found.
+
+### Chunking Comparison
+
+Different chunking strategies are compared using:
+
+```text
+chunking_comparison_results.csv
+chunking_comparison_summary.md
+```
+
+### RAG Evaluation
+
+RAGAS evaluation results are stored in:
+
+```text
+evaluation_results.csv
 ```
 
 ---
@@ -404,7 +482,7 @@ rag_documents
 What is Retrieval-Augmented Generation?
 ```
 
-Example Answer
+Example answer:
 
 ```text
 Retrieval-Augmented Generation (RAG) improves Large Language Models by retrieving relevant information from external documents before generating an answer. This allows responses to remain grounded in the uploaded knowledge base instead of relying only on the model's internal knowledge.
@@ -412,31 +490,30 @@ Retrieval-Augmented Generation (RAG) improves Large Language Models by retrievin
 
 ---
 
-## Multiple Document Workflow
+# Multiple Document Workflow
 
 1. Upload one or more PDF/TXT files.
 2. Click **Process Documents**.
-3. The application:
-   - Reads all uploaded documents.
-   - Splits them into chunks.
-   - Generates embeddings.
-   - Stores them in ChromaDB.
-4. Ask questions about any uploaded document or across multiple documents.
-5. Retrieved sources display the file name, page number, and chunk number.
-6. Click **Reset Session** to remove all uploaded documents and embeddings.
+3. The application reads the uploaded documents.
+4. Documents are split into chunks.
+5. Embeddings are generated.
+6. Embeddings are stored in ChromaDB.
+7. Ask questions about the uploaded documents.
+8. Retrieved sources display the file name, page number, and chunk number.
+9. Click **Reset Session** to remove the current documents and embeddings.
+
+---
+
 # Screenshots
 
-## Home Page
+Application screenshots demonstrating:
 
-*Add screenshot here.*
+* Document upload and processing.
+* Generated answers.
+* Retrieved sources.
+* Retrieved chunks.
 
-## Generated Answer
-
-*Add screenshot here.*
-
-## Retrieved Chunks
-
-*Add screenshot here.*
+Evidence and screenshots are maintained as part of the project submission material.
 
 ---
 
@@ -448,40 +525,47 @@ Through this project I gained practical experience with:
 * Sentence Transformer embeddings
 * ChromaDB vector databases
 * Semantic similarity search
+* Query rewriting
+* Cross-encoder reranking
 * Prompt engineering
 * Groq API integration
 * Streamlit application development
+* Retrieval evaluation
+* Guardrail testing
 * Modular Python project architecture
-* Basic software testing
 
 ---
 
 # Requirements
 
 * Python 3.12
-* Internet connection (required for Groq API)
+* Internet connection for Groq API and initial model downloads
 
-> **Note:** The first execution may take a few minutes because the Sentence Transformer model is downloaded automatically.
+> The first execution may take a few minutes because the Sentence Transformer model is downloaded automatically.
 
 ---
 
 # Future Improvements
 
-* DOCX document support
-* Token-based chunking
-* Hybrid search (Keyword + Vector)
-* Retrieval reranking
-* Conversation memory
-* RAG evaluation metrics
-* Local LLM support
-* Docker deployment
+Possible future improvements include:
 
+* DOCX document support.
+* Adaptive chunking based on document structure.
+* Hybrid keyword + vector search.
+* Additional embedding model experiments.
+* Improved hallucination detection.
+* More extensive evaluation datasets.
+* Improved logging and error handling.
+* Docker deployment.
+* Further retrieval latency optimization.
 
 ---
 
 # Author
 
-**Khushi Lukkad**
+**Khushi Lunkad**
 
 GitHub: https://github.com/khushilunkad12
+
+---
 
