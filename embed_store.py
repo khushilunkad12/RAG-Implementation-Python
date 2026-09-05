@@ -1,7 +1,7 @@
 import json
 import os
 import chromadb
-from sentence_transformers import SentenceTransformer
+
 
 
 # ==========================================
@@ -9,6 +9,7 @@ from sentence_transformers import SentenceTransformer
 # ==========================================
 
 def store_embeddings(model=None):
+
     """
     Reads output_chunks.json,
     generates embeddings,
@@ -19,6 +20,7 @@ def store_embeddings(model=None):
     # Check if chunk file exists
     # ----------------------------
 
+    from sentence_transformers import SentenceTransformer
     if not os.path.exists("output_chunks.json"):
         print("Error: output_chunks.json not found.")
         print()
@@ -51,21 +53,11 @@ def store_embeddings(model=None):
     # Connect to ChromaDB
     # ----------------------------
 
-    client = chromadb.PersistentClient(
-        path="chroma_db"
-    )
+    client = chromadb.PersistentClient(path="chroma_db")
 
-    # Remove old collection if it exists
-    try:
-        client.delete_collection("rag_documents")
-        print("Old collection removed.")
-    except Exception:
-        pass
-
-    # Create a fresh collection
     collection = client.get_or_create_collection(
-        name="rag_documents"
-    )
+    name="rag_documents"
+)
 
     print("Connected to ChromaDB.")
 

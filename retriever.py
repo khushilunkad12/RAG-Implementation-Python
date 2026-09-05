@@ -1,5 +1,5 @@
 import chromadb
-from sentence_transformers import SentenceTransformer, CrossEncoder
+
 
 # ==========================================
 # 1. Models (Lazy Loading)
@@ -18,6 +18,8 @@ def get_model():
     if _model is None:
         print("Loading embedding model...")
 
+        from sentence_transformers import SentenceTransformer
+
         _model = SentenceTransformer(
             "all-MiniLM-L6-v2"
         )
@@ -35,6 +37,8 @@ def get_reranker():
 
     if _reranker is None:
         print("Loading reranker...")
+
+        from sentence_transformers import CrossEncoder
 
         _reranker = CrossEncoder(
             "cross-encoder/ms-marco-MiniLM-L-6-v2"
@@ -72,10 +76,10 @@ def get_collection():
 
         except Exception as e:
             raise RuntimeError(
-                "Chroma collection not found. "
-                "Run 'python main.py' followed by "
-                "'python embed_store.py' first."
-            ) from e
+    "Chroma collection not found. "
+    "Run 'python main.py' followed by "
+    "'python embed_store.py' first."
+) from e
 
     return collection
 

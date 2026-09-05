@@ -1,7 +1,7 @@
 import os
 import shutil
 
-import chromadb
+
 import streamlit as st
 
 
@@ -15,13 +15,10 @@ COLLECTION_NAME = "rag_documents"
 
 # ==========================================
 # Cached Embedding Model
-# ==========================================
+# ==================== ======================
 
-@st.cache_resource
-def get_embed_model():
-    from sentence_transformers import SentenceTransformer
 
-    return SentenceTransformer("all-MiniLM-L6-v2")
+
 
 
 # ==========================================
@@ -30,6 +27,8 @@ def get_embed_model():
 
 def reset_chroma_collection():
     try:
+        import chromadb
+
         client = chromadb.PersistentClient(
             path=CHROMA_DB_PATH
         )
@@ -110,17 +109,10 @@ if uploaded_files:
         from main import process_documents
         from embed_store import store_embeddings
 
-        # ------------------------------------------
-        # Save uploaded documents
-        # ------------------------------------------
-
         if os.path.exists("documents"):
             shutil.rmtree("documents")
 
-        os.makedirs(
-            "documents",
-            exist_ok=True
-        )
+        os.makedirs("documents", exist_ok=True)
 
         for uploaded_file in uploaded_files:
 
@@ -129,93 +121,58 @@ if uploaded_files:
                 uploaded_file.name
             )
 
-            with open(
-                file_path,
-                "wb"
-            ) as file:
+            with open(file_path, "wb") as file:
+                file.write(uploaded_file.getbuffer())
 
-                file.write(
-                    uploaded_file.getbuffer()
-                )
+        st.write("Starting document processing...")
 
-        # ------------------------------------------
-        # Reset state
-        # ------------------------------------------
+        try:
 
-        st.session_state.document_ready = False
-        st.session_state.current_documents = []
+            stats = process_documents()
 
-        # ------------------------------------------
-        # Process documents + embeddings
-        # ------------------------------------------
-
-        with st.spinner(
-            "Processing documents and generating embeddings..."
-        ):
-
-            try:
-
-                # Step 1: Load and chunk documents
-                stats = process_documents()
-
-                if stats is None:
-
-                    st.error(
-                        "Failed to process documents."
-                    )
-
-                    st.session_state.document_ready = False
-
-                    st.stop()
-
-                # Step 2: Generate and store embeddings
-                model = get_embed_model()
-
-                store_embeddings(model)
-
-                # --------------------------------------
-                # Processing successful
-                # --------------------------------------
-
-                st.session_state.current_documents = [
-                    file.name
-                    for file in uploaded_files
-                ]
-
-                st.session_state.document_ready = True
-
-                st.success(
-                    "✅ Documents processed and embeddings stored successfully!"
-                )
-
-                uploaded_names = "\n".join(
-                    f"• {file.name}"
-                    for file in uploaded_files
-                )
-
-                st.info(
-                    f"""
-📄 *Processed Documents*
-
-{uploaded_names}
-
-📑 *Total Pages:* {stats["pages"]}
-
-🧩 *Total Chunks:* {stats["chunks"]}
-"""
-                )
-
-            except Exception as error:
-
-                st.error(
-                    f"Document processing failed: {error}"
-                )
-
-                st.session_state.current_documents = []
-
-                st.session_state.document_ready = False
-
+            if stats is None:
+                st.error("Failed to process documents.")
                 st.stop()
+
+            st.write("Document processing completed.")
+            st.write(stats)
+
+            st.write("Starting embedding storage...")
+
+            store_embeddings()
+
+            st.write("Embedding storage completed.")
+
+            st.session_state.current_documents = [
+                file.name for file in uploaded_files
+            ]
+
+            st.session_state.document_ready = True
+
+            st.success(
+                "✅ Documents processed and embeddings stored successfully!"
+            )
+
+            st.info(
+                f"""
+📄 Processed Documents: {len(uploaded_files)}
+
+📑 Total Pages: {stats["pages"]}
+
+🧩 Total Chunks: {stats["chunks"]}
+"""
+            )
+
+        except Exception as error:
+
+            st.session_state.current_documents = []
+            st.session_state.document_ready = False
+
+            st.error(
+                f"Document processing failed: {error}"
+            )
+
+            st.stop()
 
 
 # ==========================================
