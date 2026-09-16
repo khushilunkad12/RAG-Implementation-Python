@@ -1,0 +1,50 @@
+[
+  {
+    "question": "What is Python?",
+    "ground_truth": "Python is a high-level, interpreted programming language designed with an emphasis on readability and developer productivity."
+  },
+  {
+    "question": "What programming styles does Python support?",
+    "ground_truth": "Python supports multiple programming paradigms, including procedural, object-oriented, and functional programming."
+  },
+  {
+    "question": "What built-in data structures does Python provide?",
+    "ground_truth": "Not enough information in the uploaded documents."
+  },
+  {
+    "question": "What are common uses of Python?",
+    "ground_truth": "Python can be used to build websites, analyze data, create games, control robots or devices, and work on artificial intelligence and machine learning."
+  },
+  {
+    "question": "Which frameworks can be used to build web applications with Python?",
+    "ground_truth": "Web frameworks such as Django and Flask can be used to build server-side applications and APIs."
+  },
+  {
+    "question": "Why are virtual environments used in Python projects?",
+    "ground_truth": "Virtual environments are commonly used to keep project dependencies isolated."
+  },
+  {
+    "question": "How can developers improve Python code quality?",
+    "ground_truth": "Python code quality can be improved by writing readable code, using comments, and avoiding duplication by importing reusable modules."
+  },
+  {
+    "question": "What are some limitations of Python?",
+    "ground_truth": "Not enough information in the uploaded documents."
+  },
+  {
+    "question": "What is the time complexity of Python dictionary lookup?",
+    "ground_truth": "Not enough information in the uploaded documents."
+  },
+  {
+    "question": "Who created Python?",
+    "ground_truth": "Python was created by Guido van Rossum in 1991."
+  },
+  {
+    "question": "Where is Python commonly used?",
+    "ground_truth": "Python is commonly used for building websites, analyzing data, creating games, controlling robots or devices, and working on artificial intelligence and machine learning."
+  },
+  {
+    "question": "What can developers use for testing Python applications?",
+    "ground_truth": "The Python standard library contains modules for testing."
+  }
+]

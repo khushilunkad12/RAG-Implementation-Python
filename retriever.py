@@ -88,7 +88,7 @@ def get_collection():
 # 3. Retrieval Function
 # ==========================================
 
-def retrieve_chunks(query, top_k=15, top_n=5):
+def retrieve_chunks(query, top_k=20, top_n=5):
 
     # Stage 1: Embedding retrieval
     model = get_model()
