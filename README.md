@@ -554,6 +554,30 @@ Through this project I gained practical experience with:
 
 ---
 
+### Retrieval Experiment – Top-N Comparison
+
+The retrieval pipeline initially retrieves 20 candidate chunks using embedding similarity, reranks them using a CrossEncoder, and passes the top N chunks to the LLM.
+
+#### Experiment
+
+Only the final number of retrieved chunks (`top_n`) was changed. All other retrieval and evaluation settings were kept unchanged.
+
+| Configuration | Answer Relevancy | Faithfulness | Context Precision | Context Recall |
+| ------------- | ---------------: | -----------: | ----------------: | -------------: |
+| top_n = 5     |           0.4614 |       0.5000 |            0.5400 |         0.6000 |
+| top_n = 3     |           0.3705 |       0.4545 |            0.5152 |         0.4545 |
+
+#### Observation
+
+Reducing the final retrieved context from 5 chunks to 3 resulted in lower scores across all four RAGAS metrics. Context recall decreased from 0.6000 to 0.4545, indicating that the additional retrieved chunks were contributing relevant information to the evaluation questions.
+
+#### Conclusion
+
+The `top_n = 5` configuration is retained as the current retrieval configuration. This decision is based on the measured evaluation results rather than an assumption.
+
+The next retrieval experiment will be performed independently after the evaluation quota resets.
+
+
 # Future Improvements
 
 Possible future improvements include:
